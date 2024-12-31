@@ -1,12 +1,28 @@
 part of 'register_bloc.dart';
 
-@immutable
-abstract class RegisterState {}
-
-class RegisterInitial extends RegisterState {}
-
-class IsLoading extends RegisterState {
+class RegisterState extends Equatable {
   final bool isLoading;
+  final String? errorMessage;
+  final String? otpMessage;
 
-  IsLoading(this.isLoading);
+  const RegisterState({
+    this.isLoading = false,
+    this.errorMessage,
+    this.otpMessage,
+  });
+
+  RegisterState copyWith({
+    bool? isLoading,
+    String? errorMessage,
+    String? otpMessage,
+  }) {
+    return RegisterState(
+      isLoading: isLoading ?? this.isLoading,
+      errorMessage: errorMessage ?? this.errorMessage,
+      otpMessage: otpMessage ?? this.otpMessage,
+    );
+  }
+
+  @override
+  List<Object?> get props => [isLoading, errorMessage, otpMessage];
 }

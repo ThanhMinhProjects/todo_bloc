@@ -1,19 +1,24 @@
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import 'package:todo_bloc/core/error/failures.dart';
 import 'package:todo_bloc/core/services/auth_service.dart';
 import 'package:todo_bloc/core/services/body/register_body.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';
 import 'package:todo_bloc/features/register/domain/repositories/register_repository.dart';
 
+@injectable
 class RegisterRepositoryImpl implements RegisterRepository {
-  final AuthService _authService = AuthService();
+  final AuthService _authService;
+
+  RegisterRepositoryImpl(this._authService);
+
   @override
-  Future<String> register(RegisterBody body) async {
-    final response = await _authService.register(body);
-    return response.fold((l) => l.message, (r) => r);
+  Future<Either<Failure, String>> register(RegisterBody body) {
+    return _authService.register(body);
   }
 
   @override
-  Future<String> sendOtp(SendOtpBody body) async {
-    final response = await _authService.sendOtp(body);
-    return response.fold((l) => l.message, (r) => r);
+  Future<Either<Failure, String>> sendOtp(SendOtpBody body) {
+    return _authService.sendOtp(body);
   }
 }

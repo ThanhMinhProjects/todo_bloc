@@ -1,61 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:todo_bloc/core/services/body/send_otp_body.dart';
-import 'package:todo_bloc/features/register/data/repositories/register_repository_impl.dart';
-import 'package:todo_bloc/features/register/domain/repositories/register_repository.dart';
-import 'package:todo_bloc/features/register/domain/usecases/send_otp_usecase.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_bloc/features/register/presentation/bloc/register_bloc.dart';
+import 'package:todo_bloc/features/register/presentation/widgets/register_widget.dart';
 
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({super.key});
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _otpController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final registerRepositoryImpl = RegisterRepositoryImpl();
+  const RegisterScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterBloc(
-        sendOtpUsecase: SendOtpUsecase(registerRepositoryImpl),
-      ),
-      child: BlocConsumer<RegisterBloc, RegisterState>(
-        listener: (context, state) {
-          // if (state is IsLoading) {
-          //   EasyLoading.show();
-          // }
-        },
-        builder: (context, state) {
-          return Scaffold(
-              body: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Register'),
-                TextField(controller: _emailController),
-                const SizedBox(height: 20.0),
-                Row(children: [
-                  Expanded(child: TextField(controller: _otpController)),
-                  TextButton(
-                      onPressed: () {
-                        context.read<RegisterBloc>().add(SendOtpEvent(
-                            SendOtpBody(email: _emailController.text.trim())));
-                      },
-                      child: const Text('Send Otp'))
-                ]),
-                const SizedBox(height: 20.0),
-                TextField(controller: _passwordController),
-                const SizedBox(height: 20.0),
-                TextField(controller: _confirmPasswordController),
-                const SizedBox(height: 20.0),
-                ElevatedButton(onPressed: () {}, child: const Text('Register'))
-              ],
-            ),
-          ));
-        },
-      ),
+      create: (context) => GetIt.I<RegisterBloc>(),
+      child: RegisterWidget(),
     );
   }
 }
