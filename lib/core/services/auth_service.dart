@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/api/api_endpoints.dart';
 import 'package:todo_bloc/core/api/api_service.dart';
-import 'package:todo_bloc/core/api/dio_client.dart';
 import 'package:todo_bloc/core/error/failures.dart';
 import 'package:todo_bloc/core/services/body/register_body.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';

@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/error/failures.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';
 import 'package:todo_bloc/features/register/domain/repositories/register_repository.dart';
 
+@injectable
 class SendOtpUsecase {
   final RegisterRepository _registerRepository;
 

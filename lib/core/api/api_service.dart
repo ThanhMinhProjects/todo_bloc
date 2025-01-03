@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/api/dio_client.dart';
 
+@injectable
 class ApiService {
   final DioClient _dioClient;
 

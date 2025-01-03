@@ -19,9 +19,6 @@ class RegisterWidget extends StatelessWidget {
         } else {
           EasyLoading.dismiss();
         }
-        if (state.errorMessage!.isNotEmpty) {
-          EasyLoading.showError(state.errorMessage!);
-        }
       },
       builder: (context, state) {
         return Scaffold(
