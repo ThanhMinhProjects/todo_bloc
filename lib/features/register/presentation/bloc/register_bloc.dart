@@ -10,7 +10,7 @@ import 'package:todo_bloc/features/register/domain/usecases/send_otp_usecase.dar
 part 'register_event.dart';
 part 'register_state.dart';
 
-@injectable
+@Injectable()
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final SendOtpUsecase sendOtpUsecase;
   RegisterBloc({required this.sendOtpUsecase}) : super(const RegisterState()) {

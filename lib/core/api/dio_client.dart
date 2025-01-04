@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/api/api_endpoints.dart';
 
-@injectable
+@Injectable()
 class DioClient {
   final Dio dio;
   DioClient()

@@ -6,7 +6,7 @@ import 'package:todo_bloc/core/services/body/register_body.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';
 import 'package:todo_bloc/features/register/domain/repositories/register_repository.dart';
 
-@Injectable(as: RegisterRepository)
+@LazySingleton(as: RegisterRepository)
 class RegisterRepositoryImpl implements RegisterRepository {
   final AuthService _authService;
 

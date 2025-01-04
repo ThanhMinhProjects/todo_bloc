@@ -12,7 +12,16 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:todo_bloc/core/api/api_service.dart' as _i702;
 import 'package:todo_bloc/core/api/dio_client.dart' as _i890;
+import 'package:todo_bloc/core/navigation/navigation.dart' as _i600;
 import 'package:todo_bloc/core/services/auth_service.dart' as _i591;
+import 'package:todo_bloc/features/login/data/repositories/login_repository_impl.dart'
+    as _i720;
+import 'package:todo_bloc/features/login/domain/repositories/login_repository.dart'
+    as _i152;
+import 'package:todo_bloc/features/login/domain/usecases/login_usecase.dart'
+    as _i976;
+import 'package:todo_bloc/features/login/presentation/bloc/bloc/login_bloc.dart'
+    as _i692;
 import 'package:todo_bloc/features/register/data/repositories/register_repository_impl.dart'
     as _i722;
 import 'package:todo_bloc/features/register/domain/repositories/register_repository.dart'
@@ -36,10 +45,16 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.factory<_i890.DioClient>(() => _i890.DioClient());
+    gh.factory<_i692.LoginBloc>(() => _i692.LoginBloc());
+    gh.singleton<_i600.Navigation>(() => _i600.Navigation());
     gh.factory<_i702.ApiService>(() => _i702.ApiService(gh<_i890.DioClient>()));
-    gh.factory<_i591.AuthService>(
+    gh.lazySingleton<_i591.AuthService>(
         () => _i591.AuthService(gh<_i702.ApiService>()));
-    gh.factory<_i723.RegisterRepository>(
+    gh.lazySingleton<_i152.LoginRepository>(
+        () => _i720.LoginRepositoryImpl(gh<_i591.AuthService>()));
+    gh.factory<_i976.LoginUsecase>(
+        () => _i976.LoginUsecase(gh<_i152.LoginRepository>()));
+    gh.lazySingleton<_i723.RegisterRepository>(
         () => _i722.RegisterRepositoryImpl(gh<_i591.AuthService>()));
     gh.factory<_i892.RegisterUsecase>(
         () => _i892.RegisterUsecase(gh<_i723.RegisterRepository>()));
