@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.email);
+    // print(widget.email);
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {},
       builder: (context, state) {

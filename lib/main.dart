@@ -5,15 +5,16 @@ import 'package:todo_bloc/core/di/injection.dart';
 
 void main() {
   configureDependencies();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: ConfigRouter.router,
+    return MaterialApp(
+      key: navigatorKey,
       builder: EasyLoading.init(),
     );
   }

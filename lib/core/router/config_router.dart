@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -41,7 +39,6 @@ class ConfigRouter {
     errorBuilder: (context, state) => Container(),
   );
 
-  // Hàm điều hướng không cần context
   static void pushAndRemoveUtil(String path, {Object? extra}) {
     final currentContext = navigatorKey.currentContext;
     if (currentContext != null) {
@@ -51,7 +48,6 @@ class ConfigRouter {
     }
   }
 
-  // Hàm điều hướng dạng push (nếu cần)
   static void push(String path, {Object? extra}) {
     final currentContext = navigatorKey.currentContext;
     if (currentContext != null) {

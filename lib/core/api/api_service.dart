@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
-import 'package:path/path.dart';
 import 'package:todo_bloc/core/api/api_endpoints.dart';
 
 @Injectable()
 class ApiService {
-  final String baseUrl = ApiEndpoints.baseUrl; // Thay bằng URL API của bạn
+  final String baseUrl = ApiEndpoints.baseUrl;
 
   // 1. GET request
   Future<Map<String, dynamic>> fetchData(String endpoint) async {
@@ -16,7 +15,7 @@ class ApiService {
       final response = await http.get(Uri.parse(baseUrl + endpoint));
 
       if (response.statusCode == 200) {
-        return json.decode(response.body); // Trả về dữ liệu dưới dạng Map
+        return json.decode(response.body);
       } else {
         throw Exception('Failed to load data');
       }

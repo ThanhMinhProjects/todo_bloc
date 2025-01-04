@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:todo_bloc/core/router/app_router.dart';
+import 'package:todo_bloc/core/router/config_router.dart';
 import 'package:todo_bloc/core/services/body/register_body.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';
 import 'package:todo_bloc/features/register/domain/usecases/register_usecase.dart';
@@ -52,14 +54,16 @@ extension RegisterBlocExtension on RegisterBloc {
       (r) {
         switch (r['message']) {
           case 'USER_EXISTED':
-            EasyLoading.showError('user existed');
+            EasyLoading.showError('User existed');
             break;
           case 'WRONG_OTP':
-            EasyLoading.showError('wrong otp');
+            EasyLoading.showError('Wrong otp');
             break;
           default:
             emit(state.copyWith(isLoading: false));
             EasyLoading.showSuccess('success');
+            ConfigRouter.pushAndRemoveUtil(AppRouter.login,
+                extra: event.registerBody.email);
         }
       },
     );
