@@ -3,15 +3,18 @@ import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/navigation/screen_type.dart';
 import 'package:page_transition/page_transition.dart';
 
+@Injectable()
 class AppNavigator {
-  AppNavigator({required this.current});
-  final NavigatorState current;
-  Future<void> push({
+  final GlobalKey<NavigatorState> navigateKey;
+
+  AppNavigator({required this.navigateKey});
+
+  Future<Object?> push({
     required ScreenType screenType,
     Map<String, dynamic>? arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
-    current.push(
+    return navigateKey.currentState?.push(
       PageTransition(
         type: transitionType,
         child: ScreenTypeHelper.getPage(screenType, arguments: arguments),
@@ -19,12 +22,12 @@ class AppNavigator {
     );
   }
 
-  Future<void> replace({
+  Future<Object?> replace({
     required ScreenType screenType,
     Map<String, dynamic>? arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
-    current.pushReplacement(
+    return navigateKey.currentState?.pushReplacement(
       PageTransition(
         type: transitionType,
         child: ScreenTypeHelper.getPage(screenType, arguments: arguments),
@@ -32,12 +35,12 @@ class AppNavigator {
     );
   }
 
-  Future<void> pushAndRemoveUntil({
+  Future<Object?> pushAndRemoveUntil({
     required ScreenType screenType,
     Map<String, dynamic>? arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
-    current.pushAndRemoveUntil(
+    return navigateKey.currentState?.pushAndRemoveUntil(
       PageTransition(
         type: transitionType,
         child: ScreenTypeHelper.getPage(screenType, arguments: arguments),
@@ -47,6 +50,6 @@ class AppNavigator {
   }
 
   void pop() {
-    current.pop();
+    return navigateKey.currentState?.pop();
   }
 }
