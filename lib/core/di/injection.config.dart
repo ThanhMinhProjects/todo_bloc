@@ -11,8 +11,6 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:todo_bloc/core/api/api_service.dart' as _i702;
-import 'package:todo_bloc/core/api/dio_client.dart' as _i890;
-import 'package:todo_bloc/core/navigation/navigation.dart' as _i600;
 import 'package:todo_bloc/core/services/auth_service.dart' as _i591;
 import 'package:todo_bloc/features/login/data/repositories/login_repository_impl.dart'
     as _i720;
@@ -44,10 +42,8 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i890.DioClient>(() => _i890.DioClient());
+    gh.factory<_i702.ApiService>(() => _i702.ApiService());
     gh.factory<_i692.LoginBloc>(() => _i692.LoginBloc());
-    gh.singleton<_i600.Navigation>(() => _i600.Navigation());
-    gh.factory<_i702.ApiService>(() => _i702.ApiService(gh<_i890.DioClient>()));
     gh.lazySingleton<_i591.AuthService>(
         () => _i591.AuthService(gh<_i702.ApiService>()));
     gh.lazySingleton<_i152.LoginRepository>(
@@ -60,8 +56,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i892.RegisterUsecase(gh<_i723.RegisterRepository>()));
     gh.factory<_i742.SendOtpUsecase>(
         () => _i742.SendOtpUsecase(gh<_i723.RegisterRepository>()));
-    gh.factory<_i503.RegisterBloc>(
-        () => _i503.RegisterBloc(sendOtpUsecase: gh<_i742.SendOtpUsecase>()));
+    gh.factory<_i503.RegisterBloc>(() => _i503.RegisterBloc(
+          sendOtpUsecase: gh<_i742.SendOtpUsecase>(),
+          registerUsecase: gh<_i892.RegisterUsecase>(),
+        ));
     return this;
   }
 }

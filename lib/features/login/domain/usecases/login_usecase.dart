@@ -12,7 +12,7 @@ class LoginUsecase {
 
   LoginUsecase(this._loginRepository);
 
-  Future<Either<Failure, String>> call(LoginBody body) async {
+  Future<Either<Failure, Map<String, dynamic>>> call(LoginBody body) async {
     return await _loginRepository.login(body);
   }
 }

@@ -1,79 +1,132 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todo_bloc/core/api/dio_client.dart';
+import 'package:path/path.dart';
+import 'package:todo_bloc/core/api/api_endpoints.dart';
 
 @Injectable()
 class ApiService {
-  final DioClient _dioClient;
+  final String baseUrl = ApiEndpoints.baseUrl; // Thay bằng URL API của bạn
 
-  ApiService(this._dioClient);
-
-  // GET request
-  Future<Response> get(String endpoint,
-      {Map<String, dynamic>? queryParameters}) async {
+  // 1. GET request
+  Future<Map<String, dynamic>> fetchData(String endpoint) async {
     try {
-      final response = await _dioClient.dio.get(
-        endpoint,
-        queryParameters: queryParameters,
-      );
-      return response;
-    } on DioException catch (e) {
-      throw _handleError(e);
+      final response = await http.get(Uri.parse(baseUrl + endpoint));
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body); // Trả về dữ liệu dưới dạng Map
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
-  // POST request
-  Future<Response> post(String endpoint, {Map<String, dynamic>? data}) async {
+  // 2. POST request
+  Future<Map<String, dynamic>> postData(
+      String endpoint, Map<String, dynamic> body) async {
     try {
-      final response = await _dioClient.dio.post(
-        endpoint,
-        data: data,
+      final response = await http.post(
+        Uri.parse(endpoint),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(body),
       );
-      return response;
-    } on DioException catch (e) {
-      throw _handleError(e);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return data['body'];
+      } else {
+        final data = json.decode(response.body);
+        return data;
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
-  // PUT request
-  Future<Response> put(String endpoint, {Map<String, dynamic>? data}) async {
+  // 3. PUT request
+  Future<Map<String, dynamic>> putData(
+      String endpoint, Map<String, dynamic> body) async {
     try {
-      final response = await _dioClient.dio.put(
-        endpoint,
-        data: data,
+      final response = await http.put(
+        Uri.parse(baseUrl + endpoint),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(body),
       );
-      return response;
-    } on DioException catch (e) {
-      throw _handleError(e);
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body); // Trả về dữ liệu từ API
+      } else {
+        throw Exception('Failed to update data');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
-  // DELETE request
-  Future<Response> delete(String endpoint, {Map<String, dynamic>? data}) async {
+  // 4. DELETE request
+  Future<Map<String, dynamic>> deleteData(String endpoint) async {
     try {
-      final response = await _dioClient.dio.delete(
-        endpoint,
-        data: data,
-      );
-      return response;
-    } on DioException catch (e) {
-      throw _handleError(e);
+      final response = await http.delete(Uri.parse(baseUrl + endpoint));
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body); // Trả về dữ liệu từ API
+      } else {
+        throw Exception('Failed to delete data');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
-  // Handle errors globally
-  dynamic _handleError(DioException error) {
-    // You can customize error handling as needed
-    if (error.type == DioExceptionType.connectionTimeout) {
-      return 'Connection Timeout';
-    } else if (error.type == DioExceptionType.receiveTimeout) {
-      return 'Receive Timeout';
-    } else if (error.type == DioExceptionType.badResponse) {
-      return 'Received Invalid Status Code: ${error.response?.statusCode}';
-    } else if (error.type == DioExceptionType.cancel) {
-      return 'Request Cancelled';
-    } else {
-      return 'Unexpected Error: ${error.message}';
+  // 5. PATCH request
+  Future<Map<String, dynamic>> patchData(
+      String endpoint, Map<String, dynamic> body) async {
+    try {
+      final response = await http.patch(
+        Uri.parse(baseUrl + endpoint),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(body),
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body); // Trả về dữ liệu từ API
+      } else {
+        throw Exception('Failed to update data');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // 6. Upload File (POST)
+  Future<void> uploadFile(String endpoint, File file) async {
+    try {
+      var request =
+          http.MultipartRequest('POST', Uri.parse(baseUrl + endpoint));
+      request.headers.addAll({'Content-Type': 'multipart/form-data'});
+
+      // Tạo một phần để upload file
+      var multipartFile = await http.MultipartFile.fromPath(
+        'file', // Tên trường trong API
+        file.path,
+        contentType: MediaType('application', 'octet-stream'),
+      );
+
+      request.files.add(multipartFile);
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        print('File uploaded successfully');
+      } else {
+        throw Exception('Failed to upload file');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

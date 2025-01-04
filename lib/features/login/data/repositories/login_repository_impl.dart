@@ -11,7 +11,7 @@ class LoginRepositoryImpl implements LoginRepository {
 
   LoginRepositoryImpl(this._authService);
   @override
-  Future<Either<Failure, String>> login(LoginBody body) async {
+  Future<Either<Failure, Map<String, dynamic>>> login(LoginBody body) async {
     return await _authService.login(body);
   }
 }

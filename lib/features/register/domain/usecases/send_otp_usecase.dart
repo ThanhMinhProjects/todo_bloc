@@ -10,7 +10,7 @@ class SendOtpUsecase {
 
   SendOtpUsecase(this._registerRepository);
 
-  Future<Either<Failure, String>> call(SendOtpBody body) async {
+  Future<Either<Failure, Map<String, dynamic>>> call(SendOtpBody body) async {
     return await _registerRepository.sendOtp(body);
   }
 }

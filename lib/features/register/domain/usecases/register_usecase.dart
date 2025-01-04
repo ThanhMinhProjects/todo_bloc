@@ -10,7 +10,7 @@ class RegisterUsecase {
 
   RegisterUsecase(this._registerRepository);
 
-  Future<Either<Failure, String>> call(RegisterBody body) async {
+  Future<Either<Failure, Map<String, dynamic>>> call(RegisterBody body) async {
     return await _registerRepository.register(body);
   }
 }

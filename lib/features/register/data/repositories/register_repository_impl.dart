@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/error/failures.dart';
 import 'package:todo_bloc/core/services/auth_service.dart';
@@ -13,12 +14,12 @@ class RegisterRepositoryImpl implements RegisterRepository {
   RegisterRepositoryImpl(this._authService);
 
   @override
-  Future<Either<Failure, String>> register(RegisterBody body) {
-    return _authService.register(body);
+  Future<Either<Failure, Map<String, dynamic>>> sendOtp(SendOtpBody body) {
+    return _authService.sendOtp(body);
   }
 
   @override
-  Future<Either<Failure, String>> sendOtp(SendOtpBody body) {
-    return _authService.sendOtp(body);
+  Future<Either<Failure, Map<String, dynamic>>> register(RegisterBody body) {
+    return _authService.register(body);
   }
 }
