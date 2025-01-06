@@ -84,6 +84,7 @@ extension RegisterBlocExtension on AuthBloc {
 
   Future<void> login(LoginEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(isLoading: true));
+
     final result = await loginUsecase(event.loginBody);
     result.fold(
       (l) {

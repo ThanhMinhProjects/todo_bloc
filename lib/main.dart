@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_bloc/core/di/injection.dart';
+import 'package:todo_bloc/core/navigation/screen_type.dart';
+import 'package:todo_bloc/core/services/local/share_pref_service.dart';
+import 'package:todo_bloc/features/app/presentation/app.dart';
 import 'package:todo_bloc/features/auth/presentation/screens/login_screen.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final navigatorKey = getIt<GlobalKey<NavigatorState>>();
-
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-      home: const LoginScreen(),
-      builder: EasyLoading.init(),
-    );
-  }
+  runApp(App());
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
 import 'package:todo_bloc/core/extensions/build_context_extension.dart';
@@ -35,7 +36,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocProvider(
       create: (_) => GetIt.I<AuthBloc>(),
       child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state.isLoading) {
+            EasyLoading.show();
+          } else {
+            EasyLoading.dismiss();
+          }
+        },
         builder: (context, state) {
           return GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -63,10 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 20.0),
                     ElevatedButton(
                         onPressed: () {
-                          context.read<AuthBloc>().add(LoginEvent(LoginBody(
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                              )));
+                          if (_formKey.currentState?.validate() == true) {
+                            context.read<AuthBloc>().add(LoginEvent(LoginBody(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                )));
+                          }
                         },
                         child: const Text('Login')),
                     ElevatedButton(

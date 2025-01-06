@@ -17,6 +17,14 @@ import 'package:todo_bloc/core/di/injection.dart' as _i1013;
 import 'package:todo_bloc/core/navigation/app_navigation.dart' as _i214;
 import 'package:todo_bloc/core/services/local/share_pref_service.dart' as _i49;
 import 'package:todo_bloc/core/services/remote/auth_service.dart' as _i256;
+import 'package:todo_bloc/features/app/data/repositories/app_repository_impl.dart'
+    as _i208;
+import 'package:todo_bloc/features/app/domain/repositories/app_repository.dart'
+    as _i108;
+import 'package:todo_bloc/features/app/domain/usecase/get_token_usecase.dart'
+    as _i884;
+import 'package:todo_bloc/features/app/presentation/bloc/bloc/app_bloc.dart'
+    as _i629;
 import 'package:todo_bloc/features/auth/data/repositories/auth_repository_impl.dart'
     as _i551;
 import 'package:todo_bloc/features/auth/domain/repositories/auth_repository.dart'
@@ -57,6 +65,10 @@ extension GetItInjectableX on _i174.GetIt {
         navigateKey: gh<_i409.GlobalKey<_i409.NavigatorState>>()));
     gh.lazySingleton<_i49.SharePrefService>(
         () => _i49.SharePrefService(gh<_i460.SharedPreferences>()));
+    gh.factory<_i108.AppRepository>(
+        () => _i208.AppRepositoriesImpl(gh<_i49.SharePrefService>()));
+    gh.factory<_i884.GetTokenUsecase>(
+        () => _i884.GetTokenUsecase(gh<_i108.AppRepository>()));
     gh.lazySingleton<_i1011.AuthRepository>(() => _i551.AuthRepositoryImpl(
           gh<_i256.AuthService>(),
           gh<_i49.SharePrefService>(),
@@ -69,6 +81,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i31.SendOtpUsecase(gh<_i1011.AuthRepository>()));
     gh.factory<_i1035.SetTokenUsecase>(
         () => _i1035.SetTokenUsecase(gh<_i1011.AuthRepository>()));
+    gh.factory<_i629.AppBloc>(() => _i629.AppBloc(gh<_i884.GetTokenUsecase>()));
     gh.factory<_i841.AuthBloc>(() => _i841.AuthBloc(
           sendOtpUsecase: gh<_i31.SendOtpUsecase>(),
           registerUsecase: gh<_i32.RegisterUsecase>(),
