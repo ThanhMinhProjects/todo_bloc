@@ -7,31 +7,39 @@ import 'package:meta/meta.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:todo_bloc/core/navigation/app_navigation.dart';
 import 'package:todo_bloc/core/navigation/screen_type.dart';
+import 'package:todo_bloc/core/services/body/login_body.dart';
 import 'package:todo_bloc/core/services/body/register_body.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';
-import 'package:todo_bloc/features/register/domain/usecases/register_usecase.dart';
-import 'package:todo_bloc/features/register/domain/usecases/send_otp_usecase.dart';
+import 'package:todo_bloc/features/auth/domain/usecases/login_usecase.dart';
+import 'package:todo_bloc/features/auth/domain/usecases/register_usecase.dart';
+import 'package:todo_bloc/features/auth/domain/usecases/send_otp_usecase.dart';
+import 'package:todo_bloc/features/auth/domain/usecases/set_token_usecase.dart';
 
-part 'register_event.dart';
-part 'register_state.dart';
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 @Injectable()
-class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SendOtpUsecase sendOtpUsecase;
   final RegisterUsecase registerUsecase;
+  final LoginUsecase loginUsecase;
+  final SetTokenUsecase setTokenUsecase;
   final AppNavigator navigator;
-  RegisterBloc(
+  AuthBloc(
       {required this.sendOtpUsecase,
       required this.registerUsecase,
+      required this.loginUsecase,
+      required this.setTokenUsecase,
       required this.navigator})
-      : super(const RegisterState()) {
+      : super(const AuthState()) {
     on(sendOtp);
     on(register);
+    on(login);
   }
 }
 
-extension RegisterBlocExtension on RegisterBloc {
-  Future<void> sendOtp(SendOtpEvent event, Emitter<RegisterState> emit) async {
+extension RegisterBlocExtension on AuthBloc {
+  Future<void> sendOtp(SendOtpEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(isLoading: true));
     final result = await sendOtpUsecase(event.sendOtpBody);
     result.fold(
@@ -47,8 +55,7 @@ extension RegisterBlocExtension on RegisterBloc {
     );
   }
 
-  Future<void> register(
-      SubmitRegisterEvent event, Emitter<RegisterState> emit) async {
+  Future<void> register(RegisterEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(isLoading: true));
     final result = await registerUsecase(event.registerBody);
     result.fold(
@@ -71,6 +78,34 @@ extension RegisterBlocExtension on RegisterBloc {
                 screenType: ScreenType.login,
                 transitionType: PageTransitionType.leftToRight);
         }
+      },
+    );
+  }
+
+  Future<void> login(LoginEvent event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(isLoading: true));
+    final result = await loginUsecase(event.loginBody);
+    result.fold(
+      (l) {
+        emit(state.copyWith(errorMessage: l.message, isLoading: false));
+        EasyLoading.showError(l.message);
+      },
+      (r) async {
+        emit(state.copyWith(isLoading: false));
+        switch (r['message']) {
+          case 'USER_NOT_EXIST':
+            EasyLoading.showError('User not exist!');
+            break;
+          case 'WRONG_PASSWORD':
+            EasyLoading.showError('Wrong password!');
+            break;
+          default:
+            EasyLoading.showSuccess('Login success');
+            final token = r['token'];
+            await setTokenUsecase(token);
+            navigator.push(screenType: ScreenType.todo);
+        }
+        print(r);
       },
     );
   }

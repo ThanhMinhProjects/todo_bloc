@@ -9,7 +9,7 @@ import 'package:todo_bloc/core/api/api_endpoints.dart';
 class ApiService {
   final String baseUrl = ApiEndpoints.baseUrl;
 
-  // 1. GET request
+  // 1. GET 
   Future<Map<String, dynamic>> fetchData(String endpoint) async {
     try {
       final response = await http.get(Uri.parse(baseUrl + endpoint));

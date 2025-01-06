@@ -1,22 +1,22 @@
-part of 'register_bloc.dart';
+part of 'auth_bloc.dart';
 
-class RegisterState extends Equatable {
+class AuthState extends Equatable {
   final bool isLoading;
   final String? errorMessage;
   final String? otpMessage;
 
-  const RegisterState({
+  const AuthState({
     this.isLoading = false,
     this.errorMessage,
     this.otpMessage,
   });
 
-  RegisterState copyWith({
+  AuthState copyWith({
     bool? isLoading,
     String? errorMessage,
     String? otpMessage,
   }) {
-    return RegisterState(
+    return AuthState(
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
       otpMessage: otpMessage ?? this.otpMessage,

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:todo_bloc/features/login/presentation/bloc/bloc/login_bloc.dart';
-import 'package:todo_bloc/features/login/presentation/screens/login_screen.dart';
-import 'package:todo_bloc/features/register/presentation/bloc/register_bloc.dart';
-import 'package:todo_bloc/features/register/presentation/screens/register_screen.dart';
+import 'package:todo_bloc/features/auth/presentation/screens/login_screen.dart';
+import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:todo_bloc/features/auth/presentation/screens/register_screen.dart';
+import 'package:todo_bloc/features/todo/presentation/screens/add_todo_screen.dart';
+import 'package:todo_bloc/features/todo/presentation/screens/todo_screen.dart';
 
 enum ScreenType {
   login,
   register,
+  todo,
+  addTodo,
 }
 
 class ScreenTypeHelper {
@@ -16,15 +19,13 @@ class ScreenTypeHelper {
       {Map<String, dynamic>? arguments}) {
     switch (screenType) {
       case ScreenType.login:
-        return BlocProvider(
-          create: (_) => GetIt.I<LoginBloc>(),
-          child: const LoginScreen(),
-        );
+        return const LoginScreen();
       case ScreenType.register:
-        return BlocProvider(
-          create: (_) => GetIt.I<RegisterBloc>(),
-          child: RegisterScreen(),
-        );
+        return RegisterScreen();
+      case ScreenType.todo:
+        return const TodoScreen();
+      case ScreenType.addTodo:
+        return const AddTodoScreen();
     }
   }
 }

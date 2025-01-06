@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:todo_bloc/core/di/injection.dart';
-import 'package:todo_bloc/features/login/presentation/screens/login_screen.dart';
-import 'package:get_it/get_it.dart';
+import 'package:todo_bloc/features/auth/presentation/screens/login_screen.dart';
 
-void main() {
-  configureDependencies(); // Khởi tạo DI
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   runApp(const MyApp());
 }
 
@@ -14,12 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navigatorKey =
-        getIt<GlobalKey<NavigatorState>>(); // Lấy GlobalKey từ GetIt
+    final navigatorKey = getIt<GlobalKey<NavigatorState>>();
 
     return MaterialApp(
-      navigatorKey: navigatorKey, // Liên kết GlobalKey với MaterialApp
-      home: const LoginScreen(), // Màn hình mặc định
+      navigatorKey: navigatorKey,
+      home: const LoginScreen(),
       builder: EasyLoading.init(),
     );
   }

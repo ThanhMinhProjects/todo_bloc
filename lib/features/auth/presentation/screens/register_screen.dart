@@ -6,7 +6,7 @@ import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
 import 'package:todo_bloc/core/services/body/register_body.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';
 import 'package:todo_bloc/core/utils/validator.dart';
-import 'package:todo_bloc/features/register/presentation/bloc/register_bloc.dart';
+import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -20,8 +20,8 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GetIt.I<RegisterBloc>(),
-      child: BlocConsumer<RegisterBloc, RegisterState>(
+      create: (_) => GetIt.I<AuthBloc>(),
+      child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state.isLoading) {
             EasyLoading.show(status: 'loading...');
@@ -66,7 +66,7 @@ class RegisterScreen extends StatelessWidget {
                       TextButton(
                           onPressed: _emailController.text.isNotEmpty
                               ? () {
-                                  context.read<RegisterBloc>().add(SendOtpEvent(
+                                  context.read<AuthBloc>().add(SendOtpEvent(
                                       SendOtpBody(
                                           email:
                                               _emailController.text.trim())));
@@ -90,7 +90,7 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(height: 20.0),
                     ElevatedButton(
                         onPressed: () {
-                          context.read<RegisterBloc>().add(SubmitRegisterEvent(
+                          context.read<AuthBloc>().add(RegisterEvent(
                               RegisterBody(
                                   age: 0,
                                   name: _nameController.text.trim(),
