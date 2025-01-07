@@ -11,17 +11,23 @@ class TodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final sharePref = GetIt.I<SharePrefService>();
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () =>
-            context.getNavigator.push(screenType: ScreenType.addTodo),
-      ),
-      body: FutureBuilder(
-        future: sharePref.getToken(),
-        builder: (context, snapshot) => Center(
-          child: Text(snapshot.data ?? ''),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () =>
+              context.getNavigator.push(screenType: ScreenType.addTodo),
         ),
-      ),
-    );
+        body: Column(
+          children: [
+            ElevatedButton(
+                onPressed: () async {
+                  final sharePref = GetIt.I<SharePrefService>();
+                  await sharePref.clearToken();
+                  // ignore: use_build_context_synchronously
+                  context.getNavigator
+                      .pushAndRemoveUntil(screenType: ScreenType.login);
+                },
+                child: const Text('LogOut'))
+          ],
+        ));
   }
 }

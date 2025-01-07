@@ -17,11 +17,10 @@ enum ScreenType {
 }
 
 class ScreenTypeHelper {
-  static Widget getPage(ScreenType screenType,
-      {Map<String, dynamic>? arguments}) {
+  static Widget getPage(ScreenType screenType, {dynamic arguments}) {
     switch (screenType) {
       case ScreenType.login:
-        return const LoginScreen();
+        return LoginScreen(email: arguments);
       case ScreenType.register:
         return RegisterScreen();
       case ScreenType.todo:

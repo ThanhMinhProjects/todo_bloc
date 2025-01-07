@@ -6,6 +6,7 @@ import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
 import 'package:todo_bloc/core/extensions/build_context_extension.dart';
 import 'package:todo_bloc/core/navigation/screen_type.dart';
 import 'package:todo_bloc/core/services/body/login_body.dart';
+import 'package:todo_bloc/core/services/local/share_pref_service.dart';
 import 'package:todo_bloc/core/utils/validator.dart';
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 
@@ -18,16 +19,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController _emailController;
-  late TextEditingController _passwordController;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    _emailController = TextEditingController(
-      text: widget.email,
-    );
-    _passwordController = TextEditingController();
+    _emailController.text = widget.email ?? '';
     super.initState();
   }
 

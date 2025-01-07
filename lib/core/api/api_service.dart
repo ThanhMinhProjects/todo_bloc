@@ -4,16 +4,19 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/api/api_endpoints.dart';
+import 'package:todo_bloc/core/services/local/share_pref_service.dart';
 
 @Injectable()
 class ApiService {
   final String baseUrl = ApiEndpoints.baseUrl;
+  final SharePrefService _sharePrefService;
+
+  ApiService(this._sharePrefService);
 
   // GET
   Future<Map<String, dynamic>> fetchData(String endpoint) async {
     try {
       final response = await http.get(Uri.parse(baseUrl + endpoint));
-
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
@@ -28,19 +31,18 @@ class ApiService {
   Future<Map<String, dynamic>> postData(
       String endpoint, Map<String, dynamic> body) async {
     try {
+      final String? token = await _sharePrefService.getToken();
       final response = await http.post(
         Uri.parse(endpoint),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
         body: json.encode(body),
       );
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return data;
-      } else {
-        final data = json.decode(response.body);
-        return data;
-      }
+      return json.decode(response.body);
     } catch (e) {
       rethrow;
     }
@@ -50,14 +52,19 @@ class ApiService {
   Future<Map<String, dynamic>> putData(
       String endpoint, Map<String, dynamic> body) async {
     try {
+      final String? token = await _sharePrefService.getToken();
       final response = await http.put(
         Uri.parse(baseUrl + endpoint),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
         body: json.encode(body),
       );
 
       if (response.statusCode == 200) {
-        return json.decode(response.body); // Trả về dữ liệu từ API
+        return json.decode(response.body);
       } else {
         throw Exception('Failed to update data');
       }
@@ -72,7 +79,7 @@ class ApiService {
       final response = await http.delete(Uri.parse(baseUrl + endpoint));
 
       if (response.statusCode == 200) {
-        return json.decode(response.body); 
+        return json.decode(response.body);
       } else {
         throw Exception('Failed to delete data');
       }
@@ -92,7 +99,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        return json.decode(response.body); // Trả về dữ liệu từ API
+        return json.decode(response.body);
       } else {
         throw Exception('Failed to update data');
       }

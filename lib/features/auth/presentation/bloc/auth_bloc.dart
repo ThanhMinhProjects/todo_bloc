@@ -81,7 +81,8 @@ extension RegisterBlocExtension on AuthBloc {
             EasyLoading.showSuccess('success');
             navigator.pushAndRemoveUntil(
                 screenType: ScreenType.login,
-                transitionType: PageTransitionType.leftToRight);
+                transitionType: PageTransitionType.leftToRight,
+                arguments: event.registerBody.email);
         }
       },
     );

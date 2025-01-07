@@ -11,7 +11,7 @@ class AppNavigator {
 
   Future<Object?> push({
     required ScreenType screenType,
-    Map<String, dynamic>? arguments,
+    dynamic arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
     return navigateKey.currentState?.push(
@@ -24,7 +24,7 @@ class AppNavigator {
 
   Future<Object?> replace({
     required ScreenType screenType,
-    Map<String, dynamic>? arguments,
+    dynamic arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
     return navigateKey.currentState?.pushReplacement(
@@ -37,7 +37,7 @@ class AppNavigator {
 
   Future<Object?> pushAndRemoveUntil({
     required ScreenType screenType,
-    Map<String, dynamic>? arguments,
+    dynamic arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
     return navigateKey.currentState?.pushAndRemoveUntil(

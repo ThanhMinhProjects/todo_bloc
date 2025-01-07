@@ -54,15 +54,12 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
-    gh.factory<_i702.ApiService>(() => _i702.ApiService());
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => registerModule.sharedPreferences,
       preResolve: true,
     );
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
-    gh.lazySingleton<_i256.AuthService>(
-        () => _i256.AuthService(gh<_i702.ApiService>()));
     gh.factory<_i214.AppNavigator>(() => _i214.AppNavigator(
         navigateKey: gh<_i409.GlobalKey<_i409.NavigatorState>>()));
     gh.lazySingleton<_i49.SharePrefService>(
@@ -71,10 +68,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i208.AppRepositoriesImpl(gh<_i49.SharePrefService>()));
     gh.factory<_i884.GetTokenUsecase>(
         () => _i884.GetTokenUsecase(gh<_i108.AppRepository>()));
+    gh.factory<_i702.ApiService>(
+        () => _i702.ApiService(gh<_i49.SharePrefService>()));
+    gh.factory<_i629.AppBloc>(() => _i629.AppBloc(gh<_i884.GetTokenUsecase>()));
+    gh.lazySingleton<_i256.AuthService>(
+        () => _i256.AuthService(gh<_i702.ApiService>()));
     gh.lazySingleton<_i1011.AuthRepository>(() => _i551.AuthRepositoryImpl(
           gh<_i256.AuthService>(),
           gh<_i49.SharePrefService>(),
         ));
+    gh.factory<_i669.ForgotPasswordUsecase>(
+        () => _i669.ForgotPasswordUsecase(gh<_i1011.AuthRepository>()));
     gh.factory<_i736.LoginUsecase>(
         () => _i736.LoginUsecase(gh<_i1011.AuthRepository>()));
     gh.factory<_i32.RegisterUsecase>(
@@ -83,9 +87,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i31.SendOtpUsecase(gh<_i1011.AuthRepository>()));
     gh.factory<_i1035.SetTokenUsecase>(
         () => _i1035.SetTokenUsecase(gh<_i1011.AuthRepository>()));
-    gh.factory<_i669.ForgotPasswordUsecase>(
-        () => _i669.ForgotPasswordUsecase(gh<_i1011.AuthRepository>()));
-    gh.factory<_i629.AppBloc>(() => _i629.AppBloc(gh<_i884.GetTokenUsecase>()));
     gh.factory<_i841.AuthBloc>(() => _i841.AuthBloc(
           sendOtpUsecase: gh<_i31.SendOtpUsecase>(),
           registerUsecase: gh<_i32.RegisterUsecase>(),
