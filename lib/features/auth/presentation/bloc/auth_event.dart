@@ -18,3 +18,8 @@ class LoginEvent extends AuthEvent {
   final LoginBody loginBody;
   LoginEvent(this.loginBody);
 }
+
+class ForgotPasswordEvent extends AuthEvent {
+  final ForgotPasswordBody forgotPasswordBody;
+  ForgotPasswordEvent(this.forgotPasswordBody);
+}

@@ -82,6 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () => context.getNavigator
                             .push(screenType: ScreenType.register),
                         child: const Text('Register')),
+                    ElevatedButton(
+                        onPressed: () => context.getNavigator
+                            .push(screenType: ScreenType.forgotPassword),
+                        child: const Text('Forgot password')),
                   ],
                 ),
               ),

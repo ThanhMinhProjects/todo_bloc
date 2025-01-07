@@ -1,15 +1,17 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:todo_bloc/core/navigation/app_navigation.dart';
 import 'package:todo_bloc/core/navigation/screen_type.dart';
+import 'package:todo_bloc/core/services/body/forgot_password_body.dart';
 import 'package:todo_bloc/core/services/body/login_body.dart';
 import 'package:todo_bloc/core/services/body/register_body.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';
+import 'package:todo_bloc/features/auth/domain/usecases/forgot_password_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/login_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/register_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/send_otp_usecase.dart';
@@ -23,6 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SendOtpUsecase sendOtpUsecase;
   final RegisterUsecase registerUsecase;
   final LoginUsecase loginUsecase;
+  final ForgotPasswordUsecase forgotPasswordUsecase;
   final SetTokenUsecase setTokenUsecase;
   final AppNavigator navigator;
   AuthBloc(
@@ -30,11 +33,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       required this.registerUsecase,
       required this.loginUsecase,
       required this.setTokenUsecase,
+      required this.forgotPasswordUsecase,
       required this.navigator})
       : super(const AuthState()) {
     on(sendOtp);
     on(register);
     on(login);
+    on(forgotPassword);
   }
 }
 
@@ -107,6 +112,20 @@ extension RegisterBlocExtension on AuthBloc {
             navigator.push(screenType: ScreenType.todo);
         }
         print(r);
+      },
+    );
+  }
+
+  Future<void> forgotPassword(
+      ForgotPasswordEvent event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(isLoading: true));
+    final result = await forgotPasswordUsecase(event.forgotPasswordBody);
+    result.fold(
+      (l) {
+        print('left $l');
+      },
+      (r) {
+        print('right r');
       },
     );
   }

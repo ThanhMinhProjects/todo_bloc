@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/api/api_endpoints.dart';
 import 'package:todo_bloc/core/api/api_service.dart';
 import 'package:todo_bloc/core/error/failures.dart';
+import 'package:todo_bloc/core/services/body/forgot_password_body.dart';
 import 'package:todo_bloc/core/services/body/login_body.dart';
 import 'package:todo_bloc/core/services/body/register_body.dart';
 import 'package:todo_bloc/core/services/body/send_otp_body.dart';
@@ -39,6 +40,17 @@ class AuthService {
     try {
       final response =
           await _apiService.postData(ApiEndpoints.endPointLogin, body.toJson());
+      return right(response);
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, Map<String, dynamic>?>> forgotPassword(
+      ForgotPasswordBody body) async {
+    try {
+      final response = await _apiService.postData(
+          ApiEndpoints.endPointForgotPassword, body.toJson());
       return right(response);
     } catch (e) {
       return left(ServerFailure(e.toString()));

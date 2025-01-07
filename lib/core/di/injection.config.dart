@@ -29,6 +29,8 @@ import 'package:todo_bloc/features/auth/data/repositories/auth_repository_impl.d
     as _i551;
 import 'package:todo_bloc/features/auth/domain/repositories/auth_repository.dart'
     as _i1011;
+import 'package:todo_bloc/features/auth/domain/usecases/forgot_password_usecase.dart'
+    as _i669;
 import 'package:todo_bloc/features/auth/domain/usecases/login_usecase.dart'
     as _i736;
 import 'package:todo_bloc/features/auth/domain/usecases/register_usecase.dart'
@@ -81,12 +83,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i31.SendOtpUsecase(gh<_i1011.AuthRepository>()));
     gh.factory<_i1035.SetTokenUsecase>(
         () => _i1035.SetTokenUsecase(gh<_i1011.AuthRepository>()));
+    gh.factory<_i669.ForgotPasswordUsecase>(
+        () => _i669.ForgotPasswordUsecase(gh<_i1011.AuthRepository>()));
     gh.factory<_i629.AppBloc>(() => _i629.AppBloc(gh<_i884.GetTokenUsecase>()));
     gh.factory<_i841.AuthBloc>(() => _i841.AuthBloc(
           sendOtpUsecase: gh<_i31.SendOtpUsecase>(),
           registerUsecase: gh<_i32.RegisterUsecase>(),
           loginUsecase: gh<_i736.LoginUsecase>(),
           setTokenUsecase: gh<_i1035.SetTokenUsecase>(),
+          forgotPasswordUsecase: gh<_i669.ForgotPasswordUsecase>(),
           navigator: gh<_i214.AppNavigator>(),
         ));
     return this;

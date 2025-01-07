@@ -21,7 +21,7 @@ extension AppBlocExtension on AppBloc {
     final token = await getTokenUsecase();
     print('abcd$token');
     if (token != null) {
-      emit(state.copyWith(isLogin: true));
+      emit(state.copyWith(isLogin: false)); 
     } else {
       emit(state.copyWith(isLogin: false));
     }

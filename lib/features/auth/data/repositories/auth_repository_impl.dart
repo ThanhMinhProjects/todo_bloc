@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/core/error/failures.dart';
+import 'package:todo_bloc/core/services/body/forgot_password_body.dart';
 import 'package:todo_bloc/core/services/local/share_pref_service.dart';
 import 'package:todo_bloc/core/services/remote/auth_service.dart';
 import 'package:todo_bloc/core/services/body/login_body.dart';
@@ -28,6 +29,12 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, Map<String, dynamic>>> login(LoginBody body) {
     return _authService.login(body);
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>?>> forgotPassword(
+      ForgotPasswordBody body) {
+    return _authService.forgotPassword(body);
   }
 
   @override
