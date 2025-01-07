@@ -53,7 +53,7 @@ extension RegisterBlocExtension on AuthBloc {
         EasyLoading.showError(l.message);
       },
       (r) {
-        final otp = r['code'];
+        final otp = r['body']['code'];
         emit(state.copyWith(isLoading: false, otpMessage: otp));
         EasyLoading.showSuccess('Send OTP success');
       },
@@ -107,7 +107,7 @@ extension RegisterBlocExtension on AuthBloc {
             break;
           default:
             EasyLoading.showSuccess('Login success');
-            final token = r['token'];
+            final token = r['body']['token'];
             await setTokenUsecase(token);
             navigator.push(screenType: ScreenType.todo);
         }
@@ -120,12 +120,18 @@ extension RegisterBlocExtension on AuthBloc {
       ForgotPasswordEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(isLoading: true));
     final result = await forgotPasswordUsecase(event.forgotPasswordBody);
+    emit(state.copyWith(isLoading: false));
     result.fold(
       (l) {
-        print('left $l');
+        print('left ${l.message}');
+        EasyLoading.showError(l.message);
       },
       (r) {
-        print('right r');
+        if (r['status_code'] == 200) {
+          EasyLoading.showSuccess('Forgot password success');
+          navigator.pop();
+        }
+        print('right $r');
       },
     );
   }

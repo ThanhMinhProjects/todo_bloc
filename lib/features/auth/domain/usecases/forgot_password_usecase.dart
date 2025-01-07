@@ -10,7 +10,7 @@ class ForgotPasswordUsecase {
   final AuthRepository _repository;
 
   ForgotPasswordUsecase(this._repository);
-  Future<Either<Failure, Map<String, dynamic>?>> call(
+  Future<Either<Failure, Map<String, dynamic>>> call(
       ForgotPasswordBody body) async {
     return await _repository.forgotPassword(body);
   }

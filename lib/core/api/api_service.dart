@@ -9,7 +9,7 @@ import 'package:todo_bloc/core/api/api_endpoints.dart';
 class ApiService {
   final String baseUrl = ApiEndpoints.baseUrl;
 
-  // 1. GET
+  // GET
   Future<Map<String, dynamic>> fetchData(String endpoint) async {
     try {
       final response = await http.get(Uri.parse(baseUrl + endpoint));
@@ -24,7 +24,7 @@ class ApiService {
     }
   }
 
-  // 2. POST request
+  // POST
   Future<Map<String, dynamic>> postData(
       String endpoint, Map<String, dynamic> body) async {
     try {
@@ -36,7 +36,7 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return data['body'] ?? {};
+        return data;
       } else {
         final data = json.decode(response.body);
         return data;
@@ -46,7 +46,7 @@ class ApiService {
     }
   }
 
-  // 3. PUT request
+  // PUT
   Future<Map<String, dynamic>> putData(
       String endpoint, Map<String, dynamic> body) async {
     try {
@@ -66,13 +66,13 @@ class ApiService {
     }
   }
 
-  // 4. DELETE request
+  // DELETE
   Future<Map<String, dynamic>> deleteData(String endpoint) async {
     try {
       final response = await http.delete(Uri.parse(baseUrl + endpoint));
 
       if (response.statusCode == 200) {
-        return json.decode(response.body); // Trả về dữ liệu từ API
+        return json.decode(response.body); 
       } else {
         throw Exception('Failed to delete data');
       }
@@ -81,7 +81,7 @@ class ApiService {
     }
   }
 
-  // 5. PATCH request
+  // PATCH
   Future<Map<String, dynamic>> patchData(
       String endpoint, Map<String, dynamic> body) async {
     try {

@@ -9,7 +9,7 @@ abstract class AuthRepository {
   Future<Either<Failure, Map<String, dynamic>>> register(RegisterBody body);
   Future<Either<Failure, Map<String, dynamic>>> sendOtp(SendOtpBody body);
   Future<Either<Failure, Map<String, dynamic>>> login(LoginBody body);
-  Future<Either<Failure, Map<String, dynamic>?>> forgotPassword(
+  Future<Either<Failure, Map<String, dynamic>>> forgotPassword(
       ForgotPasswordBody body);
 
   Future<bool> setToken(String token);

@@ -46,7 +46,7 @@ class AuthService {
     }
   }
 
-  Future<Either<Failure, Map<String, dynamic>?>> forgotPassword(
+  Future<Either<Failure, Map<String, dynamic>>> forgotPassword(
       ForgotPasswordBody body) async {
     try {
       final response = await _apiService.postData(

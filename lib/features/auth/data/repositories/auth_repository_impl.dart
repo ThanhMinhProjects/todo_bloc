@@ -32,7 +32,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>?>> forgotPassword(
+  Future<Either<Failure, Map<String, dynamic>>> forgotPassword(
       ForgotPasswordBody body) {
     return _authService.forgotPassword(body);
   }
