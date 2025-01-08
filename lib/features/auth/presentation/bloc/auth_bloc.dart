@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:injectable/injectable.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:todo_bloc/core/navigation/app_navigation.dart';
-import 'package:todo_bloc/core/navigation/screen_type.dart';
-import 'package:todo_bloc/core/services/body/forgot_password_body.dart';
-import 'package:todo_bloc/core/services/body/login_body.dart';
-import 'package:todo_bloc/core/services/body/register_body.dart';
-import 'package:todo_bloc/core/services/body/send_otp_body.dart';
+import 'package:todo_bloc/config/navigation/app_navigation.dart';
+import 'package:todo_bloc/config/navigation/screen_type.dart';
+import 'package:todo_bloc/features/auth/data/datasources/body/forgot_password_body.dart';
+import 'package:todo_bloc/features/auth/data/datasources/body/login_body.dart';
+import 'package:todo_bloc/features/auth/data/datasources/body/register_body.dart';
+import 'package:todo_bloc/features/auth/data/datasources/body/send_otp_body.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/forgot_password_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/login_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/register_usecase.dart';
@@ -51,9 +51,10 @@ extension RegisterBlocExtension on AuthBloc {
       (l) {
         emit(state.copyWith(errorMessage: l.message, isLoading: false));
         EasyLoading.showError(l.message);
+        print(l.message);
       },
       (r) {
-        final otp = r['body']['code'];
+        final otp = r.code;
         emit(state.copyWith(isLoading: false, otpMessage: otp));
         EasyLoading.showSuccess('Send OTP success');
       },
@@ -128,7 +129,7 @@ extension RegisterBlocExtension on AuthBloc {
         EasyLoading.showError(l.message);
       },
       (r) {
-        if (r['status_code'] == 200) {
+        if (r['statusCode'] == 200) {
           EasyLoading.showSuccess('Forgot password success');
           navigator.pop();
         }

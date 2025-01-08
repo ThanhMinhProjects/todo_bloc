@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
-import 'package:todo_bloc/core/services/body/register_body.dart';
-import 'package:todo_bloc/core/services/body/send_otp_body.dart';
+import 'package:todo_bloc/features/auth/data/datasources/body/register_body.dart';
+import 'package:todo_bloc/features/auth/data/datasources/body/send_otp_body.dart';
 import 'package:todo_bloc/core/utils/validator.dart';
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 

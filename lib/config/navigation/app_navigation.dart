@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todo_bloc/core/navigation/screen_type.dart';
+import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:page_transition/page_transition.dart';
 
 @Injectable()

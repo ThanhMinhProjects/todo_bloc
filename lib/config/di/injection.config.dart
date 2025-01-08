@@ -12,11 +12,11 @@ import 'package:flutter/material.dart' as _i409;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
-import 'package:todo_bloc/core/api/api_service.dart' as _i702;
-import 'package:todo_bloc/core/di/injection.dart' as _i1013;
-import 'package:todo_bloc/core/navigation/app_navigation.dart' as _i214;
+import 'package:todo_bloc/config/api/api_service.dart' as _i702;
+import 'package:todo_bloc/config/di/injection.dart' as _i1013;
+import 'package:todo_bloc/config/navigation/app_navigation.dart' as _i214;
 import 'package:todo_bloc/core/services/local/share_pref_service.dart' as _i49;
-import 'package:todo_bloc/core/services/remote/auth_service.dart' as _i256;
+import 'package:todo_bloc/features/auth/data/datasources/auth_service.dart' as _i256;
 import 'package:todo_bloc/features/app/data/repositories/app_repository_impl.dart'
     as _i208;
 import 'package:todo_bloc/features/app/domain/repositories/app_repository.dart'

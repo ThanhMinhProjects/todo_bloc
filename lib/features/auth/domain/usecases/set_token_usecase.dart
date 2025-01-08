@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/features/auth/domain/repositories/auth_repository.dart';
+
 @Injectable()
 class SetTokenUsecase {
   final AuthRepository _repository;

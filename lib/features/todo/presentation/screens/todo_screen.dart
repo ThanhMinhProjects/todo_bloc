@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_bloc/core/extensions/build_context_extension.dart';
-import 'package:todo_bloc/core/navigation/screen_type.dart';
+import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:todo_bloc/core/services/local/share_pref_service.dart';
 
 class TodoScreen extends StatelessWidget {

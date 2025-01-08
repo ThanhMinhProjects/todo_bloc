@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todo_bloc/core/api/api_endpoints.dart';
+import 'package:todo_bloc/config/api/api_endpoints.dart';
+import 'package:todo_bloc/config/api/api_response.dart';
 import 'package:todo_bloc/core/services/local/share_pref_service.dart';
 
 @Injectable()
@@ -14,11 +15,11 @@ class ApiService {
   ApiService(this._sharePrefService);
 
   // GET
-  Future<Map<String, dynamic>> fetchData(String endpoint) async {
+  Future<http.Response> fetchData(String endpoint) async {
     try {
       final response = await http.get(Uri.parse(baseUrl + endpoint));
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        return response;
       } else {
         throw Exception('Failed to load data');
       }
@@ -28,7 +29,7 @@ class ApiService {
   }
 
   // POST
-  Future<Map<String, dynamic>> postData(
+  Future<http.Response> postData(
       String endpoint, Map<String, dynamic> body) async {
     try {
       final String? token = await _sharePrefService.getToken();
@@ -41,15 +42,18 @@ class ApiService {
         },
         body: json.encode(body),
       );
-
-      return json.decode(response.body);
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw Exception('Failed to post data');
+      }
     } catch (e) {
       rethrow;
     }
   }
 
   // PUT
-  Future<Map<String, dynamic>> putData(
+  Future<http.Response> putData(
       String endpoint, Map<String, dynamic> body) async {
     try {
       final String? token = await _sharePrefService.getToken();
@@ -64,7 +68,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        return response;
       } else {
         throw Exception('Failed to update data');
       }
@@ -74,12 +78,12 @@ class ApiService {
   }
 
   // DELETE
-  Future<Map<String, dynamic>> deleteData(String endpoint) async {
+  Future<http.Response> deleteData(String endpoint) async {
     try {
       final response = await http.delete(Uri.parse(baseUrl + endpoint));
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        return response;
       } else {
         throw Exception('Failed to delete data');
       }
@@ -89,7 +93,7 @@ class ApiService {
   }
 
   // PATCH
-  Future<Map<String, dynamic>> patchData(
+  Future<http.Response> patchData(
       String endpoint, Map<String, dynamic> body) async {
     try {
       final response = await http.patch(
@@ -99,7 +103,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        return response;
       } else {
         throw Exception('Failed to update data');
       }
