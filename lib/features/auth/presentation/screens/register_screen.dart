@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
+import 'package:todo_bloc/core/services/local/share_pref_service.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/register_body.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/send_otp_body.dart';
 import 'package:todo_bloc/core/utils/validator.dart';
@@ -91,9 +92,17 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20.0),
                     ElevatedButton(
+                        onPressed: () async {
+                          final sharePref = GetIt.I<SharePrefService>();
+                          await sharePref.clearToken();
+                          final token = await sharePref.getToken();
+                          print('token123token123$token');
+                        },
+                        child: const Text('Clear token')),
+                    ElevatedButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(RegisterEvent(
-                              RegisterEntity(
+                              RegisterBody(
                                   age: 0,
                                   name: _nameController.text.trim(),
                                   email: _emailController.text.trim(),

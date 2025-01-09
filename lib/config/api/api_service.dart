@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/config/api/api_endpoints.dart';
-import 'package:todo_bloc/config/api/api_response.dart';
+import 'package:todo_bloc/config/api/api_response_mixin.dart';
 import 'package:todo_bloc/core/services/local/share_pref_service.dart';
 
 @Injectable()
@@ -18,11 +18,8 @@ class ApiService {
   Future<http.Response> fetchData(String endpoint) async {
     try {
       final response = await http.get(Uri.parse(baseUrl + endpoint));
-      if (response.statusCode == 200) {
-        return response;
-      } else {
-        throw Exception('Failed to load data');
-      }
+
+      return response;
     } catch (e) {
       rethrow;
     }
@@ -42,11 +39,7 @@ class ApiService {
         },
         body: json.encode(body),
       );
-      if (response.statusCode == 200) {
-        return response;
-      } else {
-        throw Exception('Failed to post data');
-      }
+      return response;
     } catch (e) {
       rethrow;
     }
@@ -67,11 +60,7 @@ class ApiService {
         body: json.encode(body),
       );
 
-      if (response.statusCode == 200) {
-        return response;
-      } else {
-        throw Exception('Failed to update data');
-      }
+      return response;
     } catch (e) {
       rethrow;
     }
@@ -82,11 +71,7 @@ class ApiService {
     try {
       final response = await http.delete(Uri.parse(baseUrl + endpoint));
 
-      if (response.statusCode == 200) {
-        return response;
-      } else {
-        throw Exception('Failed to delete data');
-      }
+      return response;
     } catch (e) {
       rethrow;
     }
@@ -102,11 +87,7 @@ class ApiService {
         body: json.encode(body),
       );
 
-      if (response.statusCode == 200) {
-        return response;
-      } else {
-        throw Exception('Failed to update data');
-      }
+      return response;
     } catch (e) {
       rethrow;
     }

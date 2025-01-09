@@ -52,26 +52,26 @@ extension RegisterBlocExtension on AuthBloc {
       (l) {
         emit(state.copyWith(errorMessage: l.message, isLoading: false));
         EasyLoading.showError(l.message);
-        print(l.message);
+        print('sendOtp: ${l.message}');
       },
       (r) {
         final otp = r.code;
         emit(state.copyWith(isLoading: false, otpMessage: otp));
-        EasyLoading.showSuccess('Send OTP success');
+        EasyLoading.showSuccess('sendOtp: ${r.code}');
       },
     );
   }
 
   Future<void> register(RegisterEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(isLoading: true));
-    final result = await registerUsecase(event.registerEntity);
+    final result = await registerUsecase(event.registerBody);
     result.fold(
       (l) {
         emit(state.copyWith(errorMessage: l.message, isLoading: false));
         EasyLoading.showError(l.message);
       },
       (r) {
-        switch (r['message']) {
+        switch (r.message) {
           case 'USER_EXISTED':
             EasyLoading.showError('User existed');
             break;
@@ -81,10 +81,10 @@ extension RegisterBlocExtension on AuthBloc {
           default:
             emit(state.copyWith(isLoading: false));
             EasyLoading.showSuccess('success');
-            navigator.pushAndRemoveUntil(
-                screenType: ScreenType.login,
-                transitionType: PageTransitionType.leftToRight,
-                arguments: event.registerEntity.email);
+          // navigator.pushAndRemoveUntil(
+          //     screenType: ScreenType.login,
+          //     transitionType: PageTransitionType.leftToRight,
+          //     arguments: event.registerBody.email);
         }
       },
     );
@@ -101,7 +101,7 @@ extension RegisterBlocExtension on AuthBloc {
       },
       (r) async {
         emit(state.copyWith(isLoading: false));
-        switch (r['message']) {
+        switch (r.message) {
           case 'USER_NOT_EXIST':
             EasyLoading.showError('User not exist!');
             break;
@@ -110,8 +110,8 @@ extension RegisterBlocExtension on AuthBloc {
             break;
           default:
             EasyLoading.showSuccess('Login success');
-            final token = r['body']['token'];
-            await setTokenUsecase(token);
+            final token = r.token;
+            await setTokenUsecase(token!);
             navigator.push(screenType: ScreenType.todo);
         }
         print(r);

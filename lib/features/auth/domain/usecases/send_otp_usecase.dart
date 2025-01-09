@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todo_bloc/config/api/api_response.dart';
+import 'package:todo_bloc/config/api/api_response_mixin.dart';
 import 'package:todo_bloc/core/error/failures.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/send_otp_body.dart';
 import 'package:todo_bloc/features/auth/data/model/otp_model.dart';

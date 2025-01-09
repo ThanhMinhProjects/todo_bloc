@@ -10,8 +10,8 @@ class SendOtpEvent extends AuthEvent {
 }
 
 class RegisterEvent extends AuthEvent {
-  final RegisterEntity registerEntity;
-  RegisterEvent(this.registerEntity);
+  final RegisterBody registerBody;
+  RegisterEvent(this.registerBody);
 }
 
 class LoginEvent extends AuthEvent {
