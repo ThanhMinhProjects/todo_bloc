@@ -52,7 +52,6 @@ extension RegisterBlocExtension on AuthBloc {
       (l) {
         emit(state.copyWith(errorMessage: l.message, isLoading: false));
         EasyLoading.showError(l.message);
-        print('sendOtp: ${l.message}');
       },
       (r) {
         final otp = r.code;
@@ -81,10 +80,10 @@ extension RegisterBlocExtension on AuthBloc {
           default:
             emit(state.copyWith(isLoading: false));
             EasyLoading.showSuccess('success');
-          // navigator.pushAndRemoveUntil(
-          //     screenType: ScreenType.login,
-          //     transitionType: PageTransitionType.leftToRight,
-          //     arguments: event.registerBody.email);
+            navigator.pushAndRemoveUntil(
+                screenType: ScreenType.login,
+                transitionType: PageTransitionType.leftToRight,
+                arguments: event.registerBody.email);
         }
       },
     );
@@ -114,7 +113,6 @@ extension RegisterBlocExtension on AuthBloc {
             await setTokenUsecase(token!);
             navigator.push(screenType: ScreenType.todo);
         }
-        print(r);
       },
     );
   }
@@ -126,15 +124,23 @@ extension RegisterBlocExtension on AuthBloc {
     emit(state.copyWith(isLoading: false));
     result.fold(
       (l) {
-        print('left ${l.message}');
         EasyLoading.showError(l.message);
       },
       (r) {
-        if (r['statusCode'] == 200) {
-          EasyLoading.showSuccess('Forgot password success');
-          navigator.pop();
+        emit(state.copyWith(isLoading: false));
+        switch (r.message) {
+          case 'USER_NOT_EXIST':
+            EasyLoading.showError('User not exist!');
+            break;
+          case 'WRONG_PASSWORD':
+            EasyLoading.showError('Wrong password!');
+            break;
+          default:
+            EasyLoading.showSuccess('Forgot password success');
+            navigator.push(
+                screenType: ScreenType.login,
+                arguments: event.forgotPasswordBody.email);
         }
-        print('right $r');
       },
     );
   }

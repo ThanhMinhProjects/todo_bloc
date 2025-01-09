@@ -3,21 +3,24 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:todo_bloc/config/api/api_endpoints.dart';
 import 'package:todo_bloc/config/api/api_response_mixin.dart';
-import 'package:todo_bloc/core/services/local/share_pref_service.dart';
+import 'package:todo_bloc/core/services/share_pref_service.dart';
 
 @Injectable()
 class ApiService {
   final String baseUrl = ApiEndpoints.baseUrl;
   final SharePrefService _sharePrefService;
-
+  static final httpLog = HttpWithMiddleware.build(middlewares: [
+    HttpLogger(logLevel: LogLevel.BODY),
+  ]);
   ApiService(this._sharePrefService);
 
   // GET
   Future<http.Response> fetchData(String endpoint) async {
     try {
-      final response = await http.get(Uri.parse(baseUrl + endpoint));
+      final response = await httpLog.get(Uri.parse(baseUrl + endpoint));
 
       return response;
     } catch (e) {
@@ -30,7 +33,7 @@ class ApiService {
       String endpoint, Map<String, dynamic> body) async {
     try {
       final String? token = await _sharePrefService.getToken();
-      final response = await http.post(
+      final response = await httpLog.post(
         Uri.parse(endpoint),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
@@ -50,7 +53,7 @@ class ApiService {
       String endpoint, Map<String, dynamic> body) async {
     try {
       final String? token = await _sharePrefService.getToken();
-      final response = await http.put(
+      final response = await httpLog.put(
         Uri.parse(baseUrl + endpoint),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
@@ -69,7 +72,7 @@ class ApiService {
   // DELETE
   Future<http.Response> deleteData(String endpoint) async {
     try {
-      final response = await http.delete(Uri.parse(baseUrl + endpoint));
+      final response = await httpLog.delete(Uri.parse(baseUrl + endpoint));
 
       return response;
     } catch (e) {
@@ -81,7 +84,7 @@ class ApiService {
   Future<http.Response> patchData(
       String endpoint, Map<String, dynamic> body) async {
     try {
-      final response = await http.patch(
+      final response = await httpLog.patch(
         Uri.parse(baseUrl + endpoint),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(body),

@@ -59,10 +59,12 @@ class ForgotPasswordScreen extends StatelessWidget {
                       TextButton(
                           onPressed: _emailController.text.isNotEmpty
                               ? () {
-                                  context.read<AuthBloc>().add(SendOtpEvent(
-                                      SendOtpBody(
-                                          email:
-                                              _emailController.text.trim())));
+                                  if (_formKey.currentState!.validate()) {
+                                    context.read<AuthBloc>().add(SendOtpEvent(
+                                        SendOtpBody(
+                                            email:
+                                                _emailController.text.trim())));
+                                  }
                                 }
                               : null,
                           child: const Text('Send Otp'))

@@ -11,20 +11,20 @@ import 'package:todo_bloc/features/auth/data/datasources/body/login_body.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/register_body.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/send_otp_body.dart';
 import 'package:http/http.dart' as http;
+import 'package:todo_bloc/features/auth/data/model/forgot_password_model.dart';
 import 'package:todo_bloc/features/auth/data/model/login_model.dart';
 import 'package:todo_bloc/features/auth/data/model/otp_model.dart';
 import 'package:todo_bloc/features/auth/data/model/register_model.dart';
 
 @LazySingleton()
-class AuthService {
+class AuthDataSource {
   final ApiService _apiService;
-  AuthService(this._apiService);
+  AuthDataSource(this._apiService);
 
   Future<Either<Failure, OtpModel>> sendOtp(SendOtpBody body) async {
     try {
       final response =
           await _apiService.postData(ApiEndpoints.endPointOtp, body.toJson());
-      print('ytestttt ${response.body}');
       return right(OtpModel.fromJson(jsonDecode(response.body)));
     } catch (e) {
       return left(ServerFailure(e.toString()));
@@ -46,18 +46,18 @@ class AuthService {
     try {
       final response =
           await _apiService.postData(ApiEndpoints.endPointLogin, body.toJson());
-      return right(jsonDecode(response.body));
+      return right(LoginModel.fromJson(jsonDecode(response.body)));
     } catch (e) {
       return left(ServerFailure(e.toString()));
     }
   }
 
-  Future<Either<Failure, Map<String, dynamic>>> forgotPassword(
+  Future<Either<Failure, ForgotPasswordModel>> forgotPassword(
       ForgotPasswordBody body) async {
     try {
       final response = await _apiService.postData(
           ApiEndpoints.endPointForgotPassword, body.toJson());
-      return right(jsonDecode(response.body));
+      return right(ForgotPasswordModel.fromJson(jsonDecode(response.body)));
     } catch (e) {
       return left(ServerFailure(e.toString()));
     }

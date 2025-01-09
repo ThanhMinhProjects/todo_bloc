@@ -30,7 +30,7 @@ environment:
 dependencies:
   bloc: ^8.1.4
   cupertino_icons: ^1.0.8
-  dartz: ^0.10.1 
+  dartz: ^0.10.1
   equatable: ^2.0.7
   flutter:
     sdk: flutter
@@ -41,6 +41,7 @@ dependencies:
   http: ^1.2.2
   injectable: ^2.5.0
   page_transition: ^2.2.1
+  pretty_http_logger: ^1.0.4
   shared_preferences: ^2.3.5
 
 dev_dependencies:
@@ -95,4 +96,3 @@ flutter_native_splash:
   android_gravity: center # Vị trí ảnh (center, top, bottom, etc.)
   ios_content_mode: center # Chế độ hiển thị ảnh (scaleToFill, aspectFit, etc.)
   fullscreen: true # Tùy chọn hiển thị toàn màn hình
-

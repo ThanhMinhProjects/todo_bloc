@@ -6,7 +6,7 @@ import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
 import 'package:todo_bloc/core/extensions/build_context_extension.dart';
 import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/login_body.dart';
-import 'package:todo_bloc/core/services/local/share_pref_service.dart';
+import 'package:todo_bloc/core/services/share_pref_service.dart';
 import 'package:todo_bloc/core/utils/validator.dart';
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 
@@ -60,6 +60,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       validator: Validator.isEmpty,
                     ),
                     const SizedBox(height: 20.0),
+                    ElevatedButton(
+                        onPressed: () async {
+                          final sharePref = GetIt.I<SharePrefService>();
+                          await sharePref.clearToken();
+                          final token = await sharePref.getToken();
+                          print('token123token123$token');
+                        },
+                        child: const Text('Clear token')),
                     const SizedBox(height: 20.0),
                     CustomTextField(
                         hintText: 'Password',
@@ -68,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 20.0),
                     ElevatedButton(
                         onPressed: () {
-                          if (_formKey.currentState?.validate() == true) {
+                          if (_formKey.currentState!.validate()) {
                             context.read<AuthBloc>().add(LoginEvent(LoginBody(
                                   email: _emailController.text,
                                   password: _passwordController.text,
