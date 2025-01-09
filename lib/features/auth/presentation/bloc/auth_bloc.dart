@@ -11,6 +11,7 @@ import 'package:todo_bloc/features/auth/data/datasources/body/forgot_password_bo
 import 'package:todo_bloc/features/auth/data/datasources/body/login_body.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/register_body.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/send_otp_body.dart';
+import 'package:todo_bloc/features/auth/domain/entities/register_entity.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/forgot_password_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/login_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/register_usecase.dart';
@@ -63,7 +64,7 @@ extension RegisterBlocExtension on AuthBloc {
 
   Future<void> register(RegisterEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(isLoading: true));
-    final result = await registerUsecase(event.registerBody);
+    final result = await registerUsecase(event.registerEntity);
     result.fold(
       (l) {
         emit(state.copyWith(errorMessage: l.message, isLoading: false));
@@ -83,7 +84,7 @@ extension RegisterBlocExtension on AuthBloc {
             navigator.pushAndRemoveUntil(
                 screenType: ScreenType.login,
                 transitionType: PageTransitionType.leftToRight,
-                arguments: event.registerBody.email);
+                arguments: event.registerEntity.email);
         }
       },
     );

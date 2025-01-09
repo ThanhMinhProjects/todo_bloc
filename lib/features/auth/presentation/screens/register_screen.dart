@@ -6,6 +6,8 @@ import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/register_body.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/send_otp_body.dart';
 import 'package:todo_bloc/core/utils/validator.dart';
+import 'package:todo_bloc/features/auth/domain/entities/otp_entity.dart';
+import 'package:todo_bloc/features/auth/domain/entities/register_entity.dart';
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -91,7 +93,7 @@ class RegisterScreen extends StatelessWidget {
                     ElevatedButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(RegisterEvent(
-                              RegisterBody(
+                              RegisterEntity(
                                   age: 0,
                                   name: _nameController.text.trim(),
                                   email: _emailController.text.trim(),

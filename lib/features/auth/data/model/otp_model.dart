@@ -1,4 +1,4 @@
-import 'package:todo_bloc/features/auth/domain/emtities/otp_entity.dart';
+import 'package:todo_bloc/features/auth/domain/entities/otp_entity.dart';
 
 class OtpModel extends OtpEntity {
   OtpModel({required super.code, required super.message});
