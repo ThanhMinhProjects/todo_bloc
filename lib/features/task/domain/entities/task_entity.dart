@@ -1,12 +1,12 @@
-class Task {
+class TaskEntity {
   final String id;
   final String name;
   final String description;
   final String status;
-  final String createdAt;
-  final String updatedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
-  Task({
+  TaskEntity({
     required this.id,
     required this.name,
     required this.description,

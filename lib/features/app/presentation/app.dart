@@ -12,18 +12,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => GetIt.I<AppBloc>(),
-      child: BlocBuilder<AppBloc, AppState>(
-        builder: (context, state) {
-          return MaterialApp(
-            navigatorKey: navigatorKey,
-            home: ScreenTypeHelper.getPage(
-                state.isLogin ? ScreenType.todo : ScreenType.login),
-            builder: EasyLoading.init(),
-          );
-        },
-      ),
+    return BlocBuilder<AppBloc, AppState>(
+      builder: (context, state) {
+        return MaterialApp(
+          navigatorKey: navigatorKey,
+          home: ScreenTypeHelper.getPage(
+              state.isLogin ? ScreenType.task : ScreenType.login),
+          builder: EasyLoading.init(),
+        );
+      },
     );
   }
 }

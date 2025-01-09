@@ -20,8 +20,15 @@ class ApiService {
   // GET
   Future<http.Response> fetchData(String endpoint) async {
     try {
-      final response = await httpLog.get(Uri.parse(baseUrl + endpoint));
-
+      final String? token = await _sharePrefService.getToken();
+      final response = await httpLog.get(
+        Uri.parse(endpoint),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
       return response;
     } catch (e) {
       rethrow;
@@ -54,7 +61,7 @@ class ApiService {
     try {
       final String? token = await _sharePrefService.getToken();
       final response = await httpLog.put(
-        Uri.parse(baseUrl + endpoint),
+        Uri.parse(endpoint),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json',
@@ -85,7 +92,7 @@ class ApiService {
       String endpoint, Map<String, dynamic> body) async {
     try {
       final response = await httpLog.patch(
-        Uri.parse(baseUrl + endpoint),
+        Uri.parse(endpoint),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(body),
       );
@@ -99,8 +106,7 @@ class ApiService {
   // 6. Upload File (POST)
   Future<void> uploadFile(String endpoint, File file) async {
     try {
-      var request =
-          http.MultipartRequest('POST', Uri.parse(baseUrl + endpoint));
+      var request = http.MultipartRequest('POST', Uri.parse(endpoint));
       request.headers.addAll({'Content-Type': 'multipart/form-data'});
 
       // Tạo một phần để upload file

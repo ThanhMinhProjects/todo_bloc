@@ -111,7 +111,7 @@ extension RegisterBlocExtension on AuthBloc {
             EasyLoading.showSuccess('Login success');
             final token = r.token;
             await setTokenUsecase(token!);
-            navigator.push(screenType: ScreenType.todo);
+            navigator.push(screenType: ScreenType.task);
         }
       },
     );
