@@ -24,7 +24,7 @@ class AuthDataSource {
   Future<Either<Failure, OtpModel>> sendOtp(SendOtpBody body) async {
     try {
       final response =
-          await _apiService.postData(ApiEndpoints.endPointOtp, body.toJson());
+          await _apiService.postData(ApiUrl.sendOtp, body.toJson());
       return right(OtpModel.fromJson(jsonDecode(response.body)));
     } catch (e) {
       return left(ServerFailure(e.toString()));
@@ -34,7 +34,7 @@ class AuthDataSource {
   Future<Either<Failure, RegisterModel>> register(RegisterBody body) async {
     try {
       final response = await _apiService.postData(
-          ApiEndpoints.endPointAuthRegister, body.toJson());
+          ApiUrl.register, body.toJson());
       final result = RegisterModel.fromJson(jsonDecode(response.body));
       return right(result);
     } catch (e) {
@@ -45,7 +45,7 @@ class AuthDataSource {
   Future<Either<Failure, LoginModel>> login(LoginBody body) async {
     try {
       final response =
-          await _apiService.postData(ApiEndpoints.endPointLogin, body.toJson());
+          await _apiService.postData(ApiUrl.login, body.toJson());
       return right(LoginModel.fromJson(jsonDecode(response.body)));
     } catch (e) {
       return left(ServerFailure(e.toString()));
@@ -56,7 +56,7 @@ class AuthDataSource {
       ForgotPasswordBody body) async {
     try {
       final response = await _apiService.postData(
-          ApiEndpoints.endPointForgotPassword, body.toJson());
+          ApiUrl.forgotPassword, body.toJson());
       return right(ForgotPasswordModel.fromJson(jsonDecode(response.body)));
     } catch (e) {
       return left(ServerFailure(e.toString()));

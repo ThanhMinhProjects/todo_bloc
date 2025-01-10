@@ -16,8 +16,8 @@ class TaskDataSource {
 
   Future<Either<Failure, TaskModel>> createTask(TaskBody body) async {
     try {
-      final response = await _apiService.postData(
-          ApiEndpoints.endPointTaskCreate, body.toJson());
+      final response =
+          await _apiService.postData(ApiUrl.createTask, body.toJson());
       final result = jsonDecode(response.body);
       return right(TaskModel.fromJson(result['body']));
     } catch (e) {
@@ -27,8 +27,7 @@ class TaskDataSource {
 
   Future<Either<Failure, List<TaskModel>>> getListTask() async {
     try {
-      final response =
-          await _apiService.fetchData(ApiEndpoints.endPointGetListTask);
+      final response = await _apiService.fetchData(ApiUrl.getListTask);
       final data = jsonDecode(response.body);
       List<dynamic> result = data['body']['docs'];
       print(result);

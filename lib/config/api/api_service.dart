@@ -10,7 +10,7 @@ import 'package:todo_bloc/core/services/share_pref_service.dart';
 
 @Injectable()
 class ApiService {
-  final String baseUrl = ApiEndpoints.baseUrl;
+  final String baseUrl = ApiUrl.baseUrl;
   final SharePrefService _sharePrefService;
   static final httpLog = HttpWithMiddleware.build(middlewares: [
     HttpLogger(logLevel: LogLevel.BODY),
