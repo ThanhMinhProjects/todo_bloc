@@ -8,14 +8,14 @@ import 'package:todo_bloc/core/utils/validator.dart';
 import 'package:todo_bloc/features/task/data/datasources/body/task_body.dart';
 import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class CreateTaskScreen extends StatefulWidget {
+  const CreateTaskScreen({super.key});
 
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<CreateTaskScreen> createState() => _CreateTaskScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
+class _CreateTaskScreenState extends State<CreateTaskScreen> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   final _formKey = GlobalKey<FormState>();

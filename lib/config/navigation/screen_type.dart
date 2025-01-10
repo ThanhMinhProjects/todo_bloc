@@ -5,15 +5,17 @@ import 'package:todo_bloc/features/auth/presentation/screens/forgot_password_scr
 import 'package:todo_bloc/features/auth/presentation/screens/login_screen.dart';
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:todo_bloc/features/auth/presentation/screens/register_screen.dart';
-import 'package:todo_bloc/features/task/presentation/screens/add_task_screen.dart';
+import 'package:todo_bloc/features/task/presentation/screens/create_task_screen.dart';
+import 'package:todo_bloc/features/task/presentation/screens/task_detail_screen.dart';
 import 'package:todo_bloc/features/task/presentation/screens/task_screen.dart';
 
 enum ScreenType {
   login,
   register,
+  forgotPassword,
   task,
   addTask,
-  forgotPassword,
+  taskDetail,
 }
 
 class ScreenTypeHelper {
@@ -23,12 +25,14 @@ class ScreenTypeHelper {
         return LoginScreen(email: arguments);
       case ScreenType.register:
         return RegisterScreen();
+      case ScreenType.forgotPassword:
+        return ForgotPasswordScreen();
       case ScreenType.task:
         return const TodoScreen();
       case ScreenType.addTask:
-        return const AddTaskScreen();
-      case ScreenType.forgotPassword:
-        return ForgotPasswordScreen();
+        return const CreateTaskScreen();
+      case ScreenType.taskDetail:
+        return TaskDetailScreens(taskEntity: arguments);
     }
   }
 }

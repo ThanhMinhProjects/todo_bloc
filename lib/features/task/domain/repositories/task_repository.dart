@@ -7,4 +7,6 @@ import 'package:todo_bloc/features/task/domain/entities/task_entity.dart';
 abstract class TaskRepository {
   Future<Either<Failure, TaskEntity>> createTask(TaskBody body);
   Future<Either<Failure, List<TaskEntity>>> getListTask();
+  Future<Either<Failure, String>> deleteTask(String id);
+  Future<Either<Failure, TaskEntity>> updateTask(TaskBody taskBody, String id);
 }

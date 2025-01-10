@@ -7,8 +7,19 @@ import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:todo_bloc/core/services/share_pref_service.dart';
 import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart';
 
-class TodoScreen extends StatelessWidget {
+class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key});
+
+  @override
+  State<TodoScreen> createState() => _TodoScreenState();
+}
+
+class _TodoScreenState extends State<TodoScreen> {
+  @override
+  void initState() {
+    context.read<TaskBloc>().add(const InitialEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +44,6 @@ class TodoScreen extends StatelessWidget {
                     onPressed: () async {
                       final sharePref = GetIt.I<SharePrefService>();
                       await sharePref.clearToken();
-
                       context.getNavigator
                           .pushAndRemoveUntil(screenType: ScreenType.login);
                     },
@@ -41,11 +51,18 @@ class TodoScreen extends StatelessWidget {
                 Expanded(
                     child: ListView.separated(
                         itemBuilder: (context, index) {
-                          final data = state.task[index];
-                          return ListTile(
-                            title: Text(data.name),
-                            subtitle: Text(data.description),
-                            trailing: Text(data.status),
+                          final task = state.task[index];
+                          return GestureDetector(
+                            onTap: () {
+                              context.getNavigator.push(
+                                  screenType: ScreenType.taskDetail,
+                                  arguments: task);
+                            },
+                            child: ListTile(
+                              title: Text(task.name),
+                              subtitle: Text(task.description),
+                              trailing: Text(task.status),
+                            ),
                           );
                         },
                         separatorBuilder: (_, __) => const SizedBox(height: 10),

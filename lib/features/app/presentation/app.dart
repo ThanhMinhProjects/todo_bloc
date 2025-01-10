@@ -15,6 +15,7 @@ class App extends StatelessWidget {
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           navigatorKey: navigatorKey,
           home: ScreenTypeHelper.getPage(
               state.isLogin ? ScreenType.task : ScreenType.login),

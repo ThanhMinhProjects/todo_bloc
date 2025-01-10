@@ -11,6 +11,18 @@ class InitialEvent extends TaskEvent {
 
 class CreateTaskEvent extends TaskEvent {
   final TaskBody taskBody;
-
   const CreateTaskEvent(this.taskBody);
+}
+
+class DeleteTaskEvent extends TaskEvent {
+  final String id;
+
+  const DeleteTaskEvent(this.id);
+}
+
+class UpdateTaskEvent extends TaskEvent {
+  final TaskBody taskBody;
+  final String id;
+
+  const UpdateTaskEvent(this.taskBody, this.id);
 }

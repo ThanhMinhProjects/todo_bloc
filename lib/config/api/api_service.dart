@@ -79,8 +79,15 @@ class ApiService {
   // DELETE
   Future<http.Response> deleteData(String endpoint) async {
     try {
-      final response = await httpLog.delete(Uri.parse(baseUrl + endpoint));
-
+      final String? token = await _sharePrefService.getToken();
+      final response = await httpLog.delete(
+        Uri.parse(endpoint),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
       return response;
     } catch (e) {
       rethrow;

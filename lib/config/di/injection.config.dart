@@ -50,8 +50,12 @@ import 'package:todo_bloc/features/task/domain/repositories/task_repository.dart
     as _i783;
 import 'package:todo_bloc/features/task/domain/usecases/create_task_usecase.dart'
     as _i560;
+import 'package:todo_bloc/features/task/domain/usecases/delete_task_usecase.dart'
+    as _i934;
 import 'package:todo_bloc/features/task/domain/usecases/get_list_task_usecase.dart'
     as _i377;
+import 'package:todo_bloc/features/task/domain/usecases/update_task_usecase.dart'
+    as _i856;
 import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart'
     as _i996;
 
@@ -105,13 +109,13 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1035.SetTokenUsecase(gh<_i1011.AuthRepository>()));
     gh.factory<_i560.CreateTaskUsecase>(
         () => _i560.CreateTaskUsecase(gh<_i783.TaskRepository>()));
+    gh.factory<_i934.DeleteTaskUsecase>(
+        () => _i934.DeleteTaskUsecase(gh<_i783.TaskRepository>()));
     gh.factory<_i377.GetListTaskUsecase>(
         () => _i377.GetListTaskUsecase(gh<_i783.TaskRepository>()));
+    gh.factory<_i856.UpdateTaskUsecase>(
+        () => _i856.UpdateTaskUsecase(gh<_i783.TaskRepository>()));
     gh.factory<_i629.AppBloc>(() => _i629.AppBloc(gh<_i884.GetTokenUsecase>()));
-    gh.factory<_i996.TaskBloc>(() => _i996.TaskBloc(
-          gh<_i560.CreateTaskUsecase>(),
-          gh<_i377.GetListTaskUsecase>(),
-        ));
     gh.factory<_i841.AuthBloc>(() => _i841.AuthBloc(
           sendOtpUsecase: gh<_i31.SendOtpUsecase>(),
           registerUsecase: gh<_i32.RegisterUsecase>(),
@@ -119,6 +123,13 @@ extension GetItInjectableX on _i174.GetIt {
           setTokenUsecase: gh<_i1035.SetTokenUsecase>(),
           forgotPasswordUsecase: gh<_i669.ForgotPasswordUsecase>(),
           navigator: gh<_i352.AppNavigator>(),
+        ));
+    gh.factory<_i996.TaskBloc>(() => _i996.TaskBloc(
+          gh<_i560.CreateTaskUsecase>(),
+          gh<_i377.GetListTaskUsecase>(),
+          gh<_i352.AppNavigator>(),
+          gh<_i934.DeleteTaskUsecase>(),
+          gh<_i856.UpdateTaskUsecase>(),
         ));
     return this;
   }

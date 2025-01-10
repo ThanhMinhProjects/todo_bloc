@@ -13,6 +13,25 @@ class TaskDataSource {
   final ApiService _apiService;
 
   TaskDataSource(this._apiService);
+  Future<Either<Failure, List<TaskModel>>> getListTask() async {
+    try {
+      final response = await _apiService.fetchData(ApiUrl.getListTask);
+      final responseBody = jsonDecode(response.body);
+      if (responseBody['body'] == null ||
+          responseBody['body']['docs'] == null) {
+        return left(ServerFailure('Invalid response structure'));
+      }
+      List<dynamic> docs = responseBody['body']['docs'];
+      final result = docs
+          .map(
+            (task) => TaskModel.fromJson(task as Map<String, dynamic>),
+          )
+          .toList();
+      return right(result);
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
 
   Future<Either<Failure, TaskModel>> createTask(TaskBody body) async {
     try {
@@ -25,17 +44,24 @@ class TaskDataSource {
     }
   }
 
-  Future<Either<Failure, List<TaskModel>>> getListTask() async {
+  Future<Either<Failure, TaskModel>> updateTask(
+      TaskBody body, String id) async {
     try {
-      final response = await _apiService.fetchData(ApiUrl.getListTask);
-      final data = jsonDecode(response.body);
-      List<dynamic> result = data['body']['docs'];
-      print(result);
-      return right(result
-          .map(
-            (e) => TaskModel.fromJson(e as Map<String, dynamic>),
-          )
-          .toList());
+      final response =
+          await _apiService.putData('${ApiUrl.updateTask}/$id', body.toJson());
+      final result = jsonDecode(response.body);
+      return right(TaskModel.fromJson(result['body']));
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, String>> deleteTask(String id) async {
+    try {
+      final response = await _apiService.deleteData('${ApiUrl.deleteTask}/$id');
+      print(response);
+      final result = jsonDecode(response.body);
+      return right(result['message']);
     } catch (e) {
       return left(ServerFailure(e.toString()));
     }
