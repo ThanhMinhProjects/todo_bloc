@@ -21,7 +21,6 @@ import 'package:todo_bloc/features/auth/domain/usecases/set_token_usecase.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-@Injectable()
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SendOtpUsecase sendOtpUsecase;
   final RegisterUsecase registerUsecase;

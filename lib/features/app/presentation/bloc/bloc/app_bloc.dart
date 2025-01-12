@@ -7,10 +7,9 @@ import 'package:todo_bloc/features/app/domain/usecase/get_token_usecase.dart';
 part 'app_event.dart';
 part 'app_state.dart';
 
-@Injectable()
 class AppBloc extends Bloc<AppEvent, AppState> {
   final GetTokenUsecase getTokenUsecase;
-  AppBloc(this.getTokenUsecase) : super(const AppState()) {
+  AppBloc({required this.getTokenUsecase}) : super(const AppState()) {
     on(onInitial);
     add(InitialAppEvent());
   }
@@ -21,7 +20,7 @@ extension AppBlocExtension on AppBloc {
     final token = await getTokenUsecase();
     print('abcd$token');
     if (token != null) {
-      emit(state.copyWith(isLogin: true)); 
+      emit(state.copyWith(isLogin: true));
     } else {
       emit(state.copyWith(isLogin: false));
     }

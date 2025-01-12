@@ -18,15 +18,18 @@ import 'package:todo_bloc/features/task/domain/usecases/update_task_usecase.dart
 part 'task_event.dart';
 part 'task_state.dart';
 
-@Injectable()
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final CreateTaskUsecase createTaskUsecase;
   final GetListTaskUsecase getListTaskUsecase;
   final DeleteTaskUsecase deleteTaskUsecase;
   final UpdateTaskUsecase updateTaskUsecase;
   final AppNavigator navigator;
-  TaskBloc(this.createTaskUsecase, this.getListTaskUsecase, this.navigator,
-      this.deleteTaskUsecase, this.updateTaskUsecase)
+  TaskBloc(
+      {required this.createTaskUsecase,
+      required this.getListTaskUsecase,
+      required this.navigator,
+      required this.deleteTaskUsecase,
+      required this.updateTaskUsecase})
       : super(const TaskState()) {
     on(onInit);
     on(onCreateTask);

@@ -8,8 +8,6 @@ final GetIt getIt = GetIt.instance;
 
 @module
 abstract class RegisterModule {
-  @singleton
-  GlobalKey<NavigatorState> get navigatorKey => GlobalKey<NavigatorState>();
   @preResolve
   Future<SharedPreferences> get sharedPreferences =>
       SharedPreferences.getInstance();

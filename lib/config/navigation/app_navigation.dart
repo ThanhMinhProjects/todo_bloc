@@ -3,18 +3,16 @@ import 'package:injectable/injectable.dart';
 import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:page_transition/page_transition.dart';
 
-@Injectable()
 class AppNavigator {
-  final GlobalKey<NavigatorState> navigateKey;
+  final BuildContext context;
 
-  AppNavigator({required this.navigateKey});
-
+  AppNavigator(this.context);
   Future<Object?> push({
     required ScreenType screenType,
     dynamic arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
-    return navigateKey.currentState?.push(
+    return Navigator.of(context).push(
       PageTransition(
         type: transitionType,
         child: ScreenTypeHelper.getPage(screenType, arguments: arguments),
@@ -27,7 +25,7 @@ class AppNavigator {
     dynamic arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
-    return navigateKey.currentState?.pushReplacement(
+    return Navigator.of(context).pushReplacement(
       PageTransition(
         type: transitionType,
         child: ScreenTypeHelper.getPage(screenType, arguments: arguments),
@@ -40,7 +38,7 @@ class AppNavigator {
     dynamic arguments,
     PageTransitionType transitionType = PageTransitionType.rightToLeft,
   }) async {
-    return navigateKey.currentState?.pushAndRemoveUntil(
+    return Navigator.of(context).pushAndRemoveUntil(
       PageTransition(
         type: transitionType,
         child: ScreenTypeHelper.getPage(screenType, arguments: arguments),
@@ -50,6 +48,6 @@ class AppNavigator {
   }
 
   void pop() {
-    return navigateKey.currentState?.pop();
+    return Navigator.of(context).pop();
   }
 }

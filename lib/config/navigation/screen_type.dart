@@ -28,7 +28,7 @@ class ScreenTypeHelper {
       case ScreenType.forgotPassword:
         return ForgotPasswordScreen();
       case ScreenType.task:
-        return const TodoScreen();
+        return const TaskScreen();
       case ScreenType.addTask:
         return const CreateTaskScreen();
       case ScreenType.taskDetail:
