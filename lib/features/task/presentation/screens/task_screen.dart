@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:todo_bloc/core/extensions/build_context_extension.dart';
 import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:todo_bloc/core/services/share_pref_service.dart';
+import 'package:todo_bloc/features/app/presentation/bloc/bloc/app_bloc.dart';
 import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart';
 
 class TodoScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     context.read<TaskBloc>().add(const InitialEvent());
@@ -33,21 +35,29 @@ class _TodoScreenState extends State<TodoScreen> {
       },
       builder: (context, state) {
         return Scaffold(
+            key: _scaffoldState,
             floatingActionButton: FloatingActionButton(
               child: const Icon(Icons.add),
               onPressed: () =>
                   context.getNavigator.push(screenType: ScreenType.addTask),
             ),
+            drawer: Drawer(
+                child: ListView(
+              children: [
+                IconButton(
+                    onPressed: () => context
+                        .read<AppBloc>()
+                        .add(LogoutEvent('ntminh16201@gmail.com')),
+                    icon: const Icon(Icons.logout))
+              ],
+            )),
+            appBar: AppBar(
+              leading: IconButton(
+                  onPressed: () => _scaffoldState.currentState?.openDrawer(),
+                  icon: const Icon(Icons.menu)),
+            ),
             body: Column(
               children: [
-                ElevatedButton(
-                    onPressed: () async {
-                      final sharePref = GetIt.I<SharePrefService>();
-                      await sharePref.clearToken();
-                      context.getNavigator
-                          .pushAndRemoveUntil(screenType: ScreenType.login);
-                    },
-                    child: const Text('LogOut')),
                 Expanded(
                     child: ListView.separated(
                         itemBuilder: (context, index) {

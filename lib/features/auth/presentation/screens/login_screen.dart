@@ -58,15 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: Validator.isEmpty,
                   ),
                   const SizedBox(height: 20.0),
-                  ElevatedButton(
-                      onPressed: () async {
-                        final sharePref = GetIt.I<SharePrefService>();
-                        await sharePref.clearToken();
-                        final token = await sharePref.getToken();
-                        print('token123token123$token');
-                      },
-                      child: const Text('Clear token')),
-                  const SizedBox(height: 20.0),
                   CustomTextField(
                       hintText: 'Password',
                       controller: _passwordController,

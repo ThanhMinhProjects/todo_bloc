@@ -20,6 +20,8 @@ import 'package:todo_bloc/features/app/data/repositories/app_repository_impl.dar
     as _i208;
 import 'package:todo_bloc/features/app/domain/repositories/app_repository.dart'
     as _i108;
+import 'package:todo_bloc/features/app/domain/usecase/clear_token_usecase.dart'
+    as _i308;
 import 'package:todo_bloc/features/app/domain/usecase/get_token_usecase.dart'
     as _i884;
 import 'package:todo_bloc/features/app/presentation/bloc/bloc/app_bloc.dart'
@@ -89,8 +91,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i94.AuthDataSource(gh<_i127.ApiService>()));
     gh.lazySingleton<_i893.TaskDataSource>(
         () => _i893.TaskDataSource(gh<_i127.ApiService>()));
+    gh.factory<_i308.ClearTokenUsecase>(
+        () => _i308.ClearTokenUsecase(gh<_i108.AppRepository>()));
     gh.factory<_i884.GetTokenUsecase>(
         () => _i884.GetTokenUsecase(gh<_i108.AppRepository>()));
+    gh.factory<_i629.AppBloc>(() => _i629.AppBloc(
+          gh<_i884.GetTokenUsecase>(),
+          gh<_i308.ClearTokenUsecase>(),
+          gh<_i352.AppNavigator>(),
+        ));
     gh.factory<_i783.TaskRepository>(
         () => _i363.TaskRepositoryImpl(gh<_i893.TaskDataSource>()));
     gh.lazySingleton<_i1011.AuthRepository>(() => _i551.AuthRepositoryImpl(
@@ -115,7 +124,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i377.GetListTaskUsecase(gh<_i783.TaskRepository>()));
     gh.factory<_i856.UpdateTaskUsecase>(
         () => _i856.UpdateTaskUsecase(gh<_i783.TaskRepository>()));
-    gh.factory<_i629.AppBloc>(() => _i629.AppBloc(gh<_i884.GetTokenUsecase>()));
     gh.factory<_i841.AuthBloc>(() => _i841.AuthBloc(
           sendOtpUsecase: gh<_i31.SendOtpUsecase>(),
           registerUsecase: gh<_i32.RegisterUsecase>(),

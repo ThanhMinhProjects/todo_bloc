@@ -4,11 +4,11 @@ import 'package:todo_bloc/features/app/domain/repositories/app_repository.dart';
 
 @Injectable()
 class GetTokenUsecase {
-  final AppRepository repository;
+  final AppRepository _repository;
 
-  GetTokenUsecase(this.repository);
+  GetTokenUsecase(this._repository);
 
   Future<String?> call() async {
-    return await repository.getToken();
+    return await _repository.getToken();
   }
 }
