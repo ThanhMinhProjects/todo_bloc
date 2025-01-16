@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.20.1
   page_transition: ^2.2.1
   pretty_http_logger: ^1.0.4
+  readmore: ^3.0.0
   shared_preferences: ^2.3.5
 
 dev_dependencies:
@@ -79,7 +80,6 @@ flutter:
     - family: VarelaRoundRegular
       fonts:
         - asset: assets/fonts/VarelaRound-Regular.ttf
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 flutter_native_splash:

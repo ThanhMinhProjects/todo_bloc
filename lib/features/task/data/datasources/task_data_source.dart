@@ -59,7 +59,6 @@ class TaskDataSource {
   Future<Either<Failure, String>> deleteTask(String id) async {
     try {
       final response = await _apiService.deleteData('${ApiUrl.deleteTask}/$id');
-      print(response);
       final result = jsonDecode(response.body);
       return right(result['message']);
     } catch (e) {

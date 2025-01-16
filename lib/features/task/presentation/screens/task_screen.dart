@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
+import 'package:todo_bloc/core/constants/app_color.dart';
+import 'package:todo_bloc/core/constants/app_style.dart';
 import 'package:todo_bloc/core/extensions/build_context_extension.dart';
 import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:todo_bloc/core/services/share_pref_service.dart';
+import 'package:todo_bloc/core/utils/color_utils.dart';
+import 'package:todo_bloc/core/utils/date_time_format.dart';
 import 'package:todo_bloc/features/app/presentation/bloc/bloc/app_bloc.dart';
+import 'package:todo_bloc/features/task/domain/entities/task_entity.dart';
 import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart';
+import 'package:todo_bloc/features/task/presentation/widgets/task_card_widget.dart';
 
 class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key});
@@ -37,7 +43,12 @@ class _TodoScreenState extends State<TodoScreen> {
         return Scaffold(
             key: _scaffoldState,
             floatingActionButton: FloatingActionButton(
-              child: const Icon(Icons.add),
+              shape: const CircleBorder(),
+              backgroundColor: AppColor.primaryColor,
+              child: const Icon(
+                Icons.add,
+                color: AppColor.backgroundColor,
+              ),
               onPressed: () =>
                   context.getNavigator.push(screenType: ScreenType.addTask),
             ),
@@ -63,17 +74,12 @@ class _TodoScreenState extends State<TodoScreen> {
                         itemBuilder: (context, index) {
                           final task = state.task[index];
                           return GestureDetector(
-                            onTap: () {
-                              context.getNavigator.push(
-                                  screenType: ScreenType.taskDetail,
-                                  arguments: task);
-                            },
-                            child: ListTile(
-                              title: Text(task.name),
-                              subtitle: Text(task.description),
-                              trailing: Text(task.status),
-                            ),
-                          );
+                              onTap: () {
+                                context.getNavigator.push(
+                                    screenType: ScreenType.taskDetail,
+                                    arguments: task);
+                              },
+                              child: TaskCardWidget(task: task));
                         },
                         separatorBuilder: (_, __) => const SizedBox(height: 10),
                         itemCount: state.task.length))

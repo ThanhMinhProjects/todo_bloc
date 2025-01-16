@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_bloc/config/navigation/screen_type.dart';
+import 'package:todo_bloc/core/components/appbar/custom_appbar.dart';
 import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
 import 'package:todo_bloc/core/utils/validator.dart';
 import 'package:todo_bloc/features/task/data/datasources/body/task_body.dart';
@@ -37,9 +38,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add task'),
-      ),
+      appBar: const CustomAppbar(title: 'Create task'),
       body: BlocConsumer<TaskBloc, TaskState>(
         listener: (context, state) {},
         builder: (context, state) {

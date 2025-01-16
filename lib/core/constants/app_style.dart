@@ -12,8 +12,12 @@ import 'package:todo_bloc/core/constants/app_color.dart';
 
 class AppStyle {
   AppStyle._();
-
+  static TextStyle semibold14 = const TextStyle(
+      color: AppColor.primaryColor, fontSize: 14, fontWeight: FontWeight.w600);
   static TextStyle regular12 = const TextStyle(
-      color: AppColor.primaryColor, fontSize: 12, fontWeight: FontWeight.w400);
-       static TextStyle bold48 = const  TextStyle(fontSize: 48, fontWeight: FontWeight.bold);
+      color: AppColor.black, fontSize: 12, fontWeight: FontWeight.w400);
+  static TextStyle regular18 = const TextStyle(
+      color: AppColor.black, fontSize: 18, fontWeight: FontWeight.w400);
+  static TextStyle bold48 =
+      const TextStyle(fontSize: 48, fontWeight: FontWeight.bold);
 }

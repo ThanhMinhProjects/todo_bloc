@@ -8,12 +8,14 @@ class CustomTextField extends StatefulWidget {
       this.controller,
       this.validator,
       this.prefixIcon,
-      this.isPassword = false});
+      this.isPassword = false,
+      this.onChanged});
   final TextEditingController? controller;
   final String hintText;
   final String? Function(String?)? validator;
   final Widget? prefixIcon;
   final bool isPassword;
+  final void Function(String)? onChanged;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -26,6 +28,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return TextFormField(
       controller: widget.controller,
       validator: widget.validator,
+      obscureText: isShowPassword,
+      onChanged: widget.onChanged,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(

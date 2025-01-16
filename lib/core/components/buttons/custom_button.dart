@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
     required this.text,
     this.backgroundColor = AppColor.primaryColor,
     this.foregroundColor = AppColor.backgroundColor,
-    this.boderColor = AppColor.backgroundColor,
+    this.boderColor = AppColor.primaryColor,
   });
   const CustomButton.outline({
     super.key,
@@ -32,7 +32,7 @@ class CustomButton extends StatelessWidget {
             minimumSize: const Size(double.infinity, 48.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
-                side: const BorderSide(color: AppColor.primaryColor))),
+                side: BorderSide(color: boderColor))),
         onPressed: onPressed,
         child: Text(text.toUpperCase()));
   }

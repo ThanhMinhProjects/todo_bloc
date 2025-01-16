@@ -8,6 +8,7 @@ import 'package:todo_bloc/features/auth/presentation/screens/register_screen.dar
 import 'package:todo_bloc/features/task/presentation/screens/create_task_screen.dart';
 import 'package:todo_bloc/features/task/presentation/screens/task_detail_screen.dart';
 import 'package:todo_bloc/features/task/presentation/screens/task_screen.dart';
+import 'package:todo_bloc/features/task/presentation/screens/task_update_screen.dart';
 
 enum ScreenType {
   login,
@@ -16,6 +17,7 @@ enum ScreenType {
   task,
   addTask,
   taskDetail,
+  taskUpdate
 }
 
 class ScreenTypeHelper {
@@ -32,7 +34,9 @@ class ScreenTypeHelper {
       case ScreenType.addTask:
         return const CreateTaskScreen();
       case ScreenType.taskDetail:
-        return TaskDetailScreens(taskEntity: arguments);
+        return TaskDetailScreens(task: arguments);
+      case ScreenType.taskUpdate:
+        return TaskUpdateScreen(task: arguments);
     }
   }
 }
