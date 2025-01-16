@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
+import 'package:todo_bloc/core/components/buttons/custom_button.dart';
 import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
+import 'package:todo_bloc/core/constants/app_color.dart';
+import 'package:todo_bloc/core/constants/app_style.dart';
 import 'package:todo_bloc/core/extensions/build_context_extension.dart';
 import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:todo_bloc/features/auth/data/datasources/body/login_body.dart';
 import 'package:todo_bloc/core/services/share_pref_service.dart';
 import 'package:todo_bloc/core/utils/validator.dart';
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:todo_bloc/features/auth/presentation/widgets/forgot_password_widget.dart';
+import 'package:todo_bloc/features/auth/presentation/widgets/register_now_widget.dart';
+import 'package:todo_bloc/gen/assets.gen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, this.email});
@@ -50,8 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Login'),
-                  const SizedBox(height: 20.0),
+                  Image.asset(Assets.images.logo.path),
+                  Text('Login', style: AppStyle.bold48),
+                  const SizedBox(height: 48.0),
                   CustomTextField(
                     hintText: 'Email',
                     controller: _emailController,
@@ -62,25 +69,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: 'Password',
                       controller: _passwordController,
                       validator: Validator.isEmpty),
-                  const SizedBox(height: 20.0),
-                  ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          context.read<AuthBloc>().add(LoginEvent(LoginBody(
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                              )));
-                        }
-                      },
-                      child: const Text('Login')),
-                  ElevatedButton(
-                      onPressed: () => context.getNavigator
-                          .push(screenType: ScreenType.register),
-                      child: const Text('Register')),
-                  ElevatedButton(
-                      onPressed: () => context.getNavigator
-                          .push(screenType: ScreenType.forgotPassword),
-                      child: const Text('Forgot password')),
+                  const SizedBox(height: 5),
+                  const ForgotPasswordNavigationWidget(),
+                  const SizedBox(height: 48.0),
+                  CustomButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<AuthBloc>().add(LoginEvent(LoginBody(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            )));
+                      }
+                    },
+                    text: 'Login',
+                  ),
+                  const SizedBox(height: 24.0),
+                  const RegisterNowWidget()
                 ],
               ),
             ),
