@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_bloc/core/components/appbar/custom_appbar.dart';
+import 'package:todo_bloc/core/components/buttons/custom_button.dart';
 import 'package:todo_bloc/core/components/textfield/custom_text_field.dart';
-import 'package:todo_bloc/core/utils/date_time_format.dart';
+import 'package:todo_bloc/core/constants/app_color.dart';
+import 'package:todo_bloc/core/constants/app_style.dart';
+import 'package:todo_bloc/core/utils/color_utils.dart';
 import 'package:todo_bloc/features/task/data/datasources/body/task_body.dart';
 import 'package:todo_bloc/features/task/domain/entities/task_entity.dart';
 import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart';
+import 'package:todo_bloc/features/task/presentation/widgets/status_dropdown_widget.dart';
 
 class TaskUpdateScreen extends StatefulWidget {
   const TaskUpdateScreen({super.key, required this.task});
@@ -23,10 +27,22 @@ class _TaskUpdateScreenState extends State<TaskUpdateScreen> {
 
   @override
   void initState() {
+    super.initState();
     _nameController.text = widget.task.name;
     _descriptionController.text = widget.task.description;
     _status = widget.task.status;
-    super.initState();
+  }
+
+  void _onSubmit() {
+    if (_formKey.currentState!.validate()) {
+      context.read<TaskBloc>().add(UpdateTaskEvent(
+          TaskBody(
+            name: _nameController.text,
+            description: _descriptionController.text,
+            status: _status,
+          ),
+          widget.task.id));
+    }
   }
 
   @override
@@ -45,64 +61,23 @@ class _TaskUpdateScreenState extends State<TaskUpdateScreen> {
             const SizedBox(height: 24.0),
             CustomTextField(
               controller: _descriptionController,
-              hintText: 'Task name',
+              hintText: 'Task description',
+              maxLines: 10,
             ),
             const SizedBox(height: 24.0),
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[300],
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                ),
-              ),
-              value: _status,
-              hint: const Text('Status'),
-              items: const [
-                DropdownMenuItem(
-                  value: 'PROCESSING',
-                  child: Text('PROCESSING'),
-                ),
-                DropdownMenuItem(
-                  value: 'DONE',
-                  child: Text('DONE'),
-                ),
-                DropdownMenuItem(
-                  value: 'FAIL',
-                  child: Text('FAIL'),
-                ),
-              ],
-              onChanged: (value) {
+            StatusDropdownWidget(
+              initialStatus: _status,
+              onStatusChanged: (value) {
                 setState(() {
-                  _status = value!;
+                  _status = value;
                 });
               },
             ),
             const SizedBox(height: 24.0),
-            Text(
-                'Created: ${DateTimeFormat.formatDDYYMM(widget.task.createdAt)}'),
-            Row(children: [
-              Expanded(
-                  child: ElevatedButton(
-                      onPressed: () => context
-                          .read<TaskBloc>()
-                          .add(DeleteTaskEvent(widget.task.id)),
-                      child: const Text('Delete'))),
-              const SizedBox(width: 24.0),
-              Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          context.read<TaskBloc>().add(UpdateTaskEvent(
-                              TaskBody(
-                                  name: _nameController.text,
-                                  description: _descriptionController.text,
-                                  status: _status),
-                              widget.task.id));
-                        }
-                      },
-                      child: const Text('Up date'))),
-            ]),
+            CustomButton(
+              onPressed: _onSubmit,
+              text: 'Submit',
+            ),
           ],
         ),
       ),

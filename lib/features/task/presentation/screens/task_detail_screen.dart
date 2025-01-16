@@ -1,6 +1,8 @@
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:todo_bloc/core/components/appbar/custom_appbar.dart';
@@ -46,8 +48,20 @@ class TaskDetailScreens extends StatelessWidget {
           Row(children: [
             Expanded(
                 child: CustomButton(
-              onPressed: () =>
-                  context.read<TaskBloc>().add(DeleteTaskEvent(task.id)),
+              onPressed: () async {
+                if (await confirm(
+                  context,
+                  title: const Text('Confirm'),
+                  content: const Text('Would you like to delete this task?'),
+                  textOK: Text(
+                    'Yes',
+                    style: AppStyle.semibold14.copyWith(color: AppColor.red),
+                  ),
+                  textCancel: Text('No', style: AppStyle.semibold14),
+                )) {
+                  context.read<TaskBloc>().add(DeleteTaskEvent(task.id));
+                }
+              },
               text: 'Delete',
               backgroundColor: AppColor.red,
               boderColor: AppColor.red,

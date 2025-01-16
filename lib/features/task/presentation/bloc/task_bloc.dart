@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:injectable/injectable.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:todo_bloc/config/navigation/app_navigation.dart';
 import 'package:todo_bloc/config/navigation/screen_type.dart';
 import 'package:todo_bloc/features/task/data/datasources/body/task_body.dart';
@@ -79,7 +80,9 @@ extension TaskBlocExtension on TaskBloc {
       (r) {
         emit(state.copyWith(isLoading: false));
         EasyLoading.showSuccess('Updated').then(
-          (_) => navigator.replace(screenType: ScreenType.task),
+          (_) => navigator.replace(
+              screenType: ScreenType.task,
+              transitionType: PageTransitionType.leftToRight),
         );
       },
     );

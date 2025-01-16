@@ -9,13 +9,15 @@ class CustomTextField extends StatefulWidget {
       this.validator,
       this.prefixIcon,
       this.isPassword = false,
-      this.onChanged});
+      this.onChanged,
+      this.maxLines});
   final TextEditingController? controller;
   final String hintText;
   final String? Function(String?)? validator;
   final Widget? prefixIcon;
   final bool isPassword;
   final void Function(String)? onChanged;
+  final int? maxLines;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -30,6 +32,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator,
       obscureText: isShowPassword,
       onChanged: widget.onChanged,
+      maxLines: widget.maxLines,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(

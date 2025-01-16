@@ -28,7 +28,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 extension AppBlocExtension on AppBloc {
   Future<void> onInitial(InitialAppEvent event, Emitter<AppState> emit) async {
     final token = await getTokenUsecase();
-    print('abcd$token');
     if (token != null) {
       emit(state.copyWith(isLogin: true));
     } else {

@@ -20,10 +20,10 @@ class DateProgessWidget extends StatelessWidget {
         Icon(
           Icons.calendar_month_outlined,
           size: itemSize,
-          color: AppColor.primaryColor,
+          color: ColorUtils.getColorByStatus(status),
         ),
         Text(DateTimeFormat.formatDDYYMM(date),
-            style: AppStyle.regular12.copyWith(color: AppColor.primaryColor)),
+            style: AppStyle.regular12.copyWith(color:  ColorUtils.getColorByStatus(status))),
         const Spacer(),
         const SizedBox(width: 10),
         _buildStatusBox(),
