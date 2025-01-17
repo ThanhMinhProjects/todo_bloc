@@ -15,10 +15,11 @@ import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
-  runApp(MultiBlocProvider(providers: [
-    BlocProvider(create: (context) => GetIt.I<AppBloc>()),
-    BlocProvider(create: (context) => GetIt.I<AuthBloc>()),
-    BlocProvider(create: (context) => GetIt.I<TaskBloc>()),
-  ], child: App()));
+  runApp(
+    MultiBlocProvider(providers: [
+      BlocProvider(create: (context) => GetIt.I<AppBloc>()),
+      BlocProvider(create: (context) => GetIt.I<AuthBloc>()),
+      BlocProvider(create: (context) => GetIt.I<TaskBloc>()),
+    ], child: App()),
+  );
 }
-  

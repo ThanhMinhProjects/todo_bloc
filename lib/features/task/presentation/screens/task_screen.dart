@@ -72,17 +72,22 @@ class _TodoScreenState extends State<TodoScreen> {
                 Expanded(
                     child: ListView.separated(
                         itemBuilder: (context, index) {
-                          final task = state.task[index];
+                          final task = state.tasks![index];
                           return GestureDetector(
-                              onTap: () {
-                                context.getNavigator.push(
+                              onTap: () async {
+                                final result = await context.getNavigator.push(
                                     screenType: ScreenType.taskDetail,
-                                    arguments: task);
+                                    arguments: task.id);
+                                if (result == true) {
+                                  context
+                                      .read<TaskBloc>()
+                                      .add(const InitialEvent());
+                                }
                               },
                               child: TaskCardWidget(task: task));
                         },
                         separatorBuilder: (_, __) => const SizedBox(height: 10),
-                        itemCount: state.task.length))
+                        itemCount: state.tasks!.length))
               ],
             ));
       },

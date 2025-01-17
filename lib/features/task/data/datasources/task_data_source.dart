@@ -15,7 +15,7 @@ class TaskDataSource {
   TaskDataSource(this._apiService);
   Future<Either<Failure, List<TaskModel>>> getListTask() async {
     try {
-      final response = await _apiService.fetchData(ApiUrl.getListTask);
+      final response = await _apiService.getData(ApiUrl.getListTask);
       final responseBody = jsonDecode(response.body);
       if (responseBody['body'] == null ||
           responseBody['body']['docs'] == null) {
@@ -49,6 +49,16 @@ class TaskDataSource {
     try {
       final response =
           await _apiService.putData('${ApiUrl.updateTask}/$id', body.toJson());
+      final result = jsonDecode(response.body);
+      return right(TaskModel.fromJson(result['body']));
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, TaskModel>> getTaskDetail(String id) async {
+    try {
+      final response = await _apiService.getData('${ApiUrl.getTaskDetail}/$id');
       final result = jsonDecode(response.body);
       return right(TaskModel.fromJson(result['body']));
     } catch (e) {

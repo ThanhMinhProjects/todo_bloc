@@ -26,3 +26,9 @@ class UpdateTaskEvent extends TaskEvent {
 
   const UpdateTaskEvent(this.taskBody, this.id);
 }
+
+class GetTaskDetailEvent extends TaskEvent {
+  final String id;
+
+  const GetTaskDetailEvent(this.id);
+}

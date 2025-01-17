@@ -18,7 +18,7 @@ class ApiService {
   ApiService(this._sharePrefService);
 
   // GET
-  Future<http.Response> fetchData(String endpoint) async {
+  Future<http.Response> getData(String endpoint) async {
     try {
       final String? token = await _sharePrefService.getToken();
       final response = await httpLog.get(

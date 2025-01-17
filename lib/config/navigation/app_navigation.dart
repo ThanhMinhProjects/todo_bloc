@@ -49,7 +49,7 @@ class AppNavigator {
     );
   }
 
-  void pop() {
-    return navigateKey.currentState?.pop();
+  void pop({Object? result}) {
+    return navigateKey.currentState?.pop(result);
   }
 }

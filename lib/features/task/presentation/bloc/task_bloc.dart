@@ -14,6 +14,7 @@ import 'package:todo_bloc/features/task/domain/entities/task_entity.dart';
 import 'package:todo_bloc/features/task/domain/usecases/create_task_usecase.dart';
 import 'package:todo_bloc/features/task/domain/usecases/delete_task_usecase.dart';
 import 'package:todo_bloc/features/task/domain/usecases/get_list_task_usecase.dart';
+import 'package:todo_bloc/features/task/domain/usecases/get_task_detail_usecase.dart';
 import 'package:todo_bloc/features/task/domain/usecases/update_task_usecase.dart';
 
 part 'task_event.dart';
@@ -25,14 +26,16 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final GetListTaskUsecase getListTaskUsecase;
   final DeleteTaskUsecase deleteTaskUsecase;
   final UpdateTaskUsecase updateTaskUsecase;
+  final GetTaskDetailUsecase getTaskDetailUsecase;
   final AppNavigator navigator;
   TaskBloc(this.createTaskUsecase, this.getListTaskUsecase, this.navigator,
-      this.deleteTaskUsecase, this.updateTaskUsecase)
+      this.deleteTaskUsecase, this.updateTaskUsecase, this.getTaskDetailUsecase)
       : super(const TaskState()) {
     on(onInit);
     on(onCreateTask);
     on(onUpDateTask);
     on(onDeleteTask);
+    on(onGetTaskDetail);
   }
 }
 
@@ -50,6 +53,21 @@ extension TaskBlocExtension on TaskBloc {
           (b, a) => a.createdAt.compareTo(b.createdAt),
         );
         emit(state.copyWith(isLoading: false, tasks: r));
+      },
+    );
+  }
+
+  Future<void> onGetTaskDetail(
+      GetTaskDetailEvent event, Emitter<TaskState> emit) async {
+    emit(state.copyWith(isLoading: true));
+    final result = await getTaskDetailUsecase(event.id);
+    result.fold(
+      (l) {
+        emit(state.copyWith(isLoading: false));
+        EasyLoading.showError(l.message);
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false, task: r));
       },
     );
   }
@@ -79,11 +97,9 @@ extension TaskBlocExtension on TaskBloc {
       },
       (r) {
         emit(state.copyWith(isLoading: false));
-        EasyLoading.showSuccess('Updated').then(
-          (_) => navigator.replace(
-              screenType: ScreenType.task,
-              transitionType: PageTransitionType.leftToRight),
-        );
+        EasyLoading.showSuccess('Updated').then((_) {
+          navigator.pop(result: true);
+        });
       },
     );
   }

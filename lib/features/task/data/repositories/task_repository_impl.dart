@@ -33,4 +33,9 @@ class TaskRepositoryImpl implements TaskRepository {
   Future<Either<Failure, TaskModel>> updateTask(TaskBody taskBody, String id) {
     return _taskDataSource.updateTask(taskBody, id);
   }
+
+  @override
+  Future<Either<Failure, TaskModel>> getTaskDetail(String id) {
+    return _taskDataSource.getTaskDetail(id);
+  }
 }

@@ -56,6 +56,8 @@ import 'package:todo_bloc/features/task/domain/usecases/delete_task_usecase.dart
     as _i934;
 import 'package:todo_bloc/features/task/domain/usecases/get_list_task_usecase.dart'
     as _i377;
+import 'package:todo_bloc/features/task/domain/usecases/get_task_detail_usecase.dart'
+    as _i407;
 import 'package:todo_bloc/features/task/domain/usecases/update_task_usecase.dart'
     as _i856;
 import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart'
@@ -122,6 +124,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i934.DeleteTaskUsecase(gh<_i783.TaskRepository>()));
     gh.factory<_i377.GetListTaskUsecase>(
         () => _i377.GetListTaskUsecase(gh<_i783.TaskRepository>()));
+    gh.factory<_i407.GetTaskDetailUsecase>(
+        () => _i407.GetTaskDetailUsecase(gh<_i783.TaskRepository>()));
     gh.factory<_i856.UpdateTaskUsecase>(
         () => _i856.UpdateTaskUsecase(gh<_i783.TaskRepository>()));
     gh.factory<_i841.AuthBloc>(() => _i841.AuthBloc(
@@ -138,6 +142,7 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i352.AppNavigator>(),
           gh<_i934.DeleteTaskUsecase>(),
           gh<_i856.UpdateTaskUsecase>(),
+          gh<_i407.GetTaskDetailUsecase>(),
         ));
     return this;
   }

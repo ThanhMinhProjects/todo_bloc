@@ -34,7 +34,7 @@ class ScreenTypeHelper {
       case ScreenType.addTask:
         return const CreateTaskScreen();
       case ScreenType.taskDetail:
-        return TaskDetailScreens(task: arguments);
+        return TaskDetailScreens(id: arguments);
       case ScreenType.taskUpdate:
         return TaskUpdateScreen(task: arguments);
     }

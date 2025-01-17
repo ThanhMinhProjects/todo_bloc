@@ -15,6 +15,7 @@ class ApiUrl {
   static const uploadFile = '$baseUrl/file/upload';
   static const getListTask = '$baseUrl/task/get-list';
   static const createTask = '$baseUrl/task/create';
+  static const getTaskDetail = '$baseUrl/task/get-detail';
   static const updateTask = '$baseUrl/task/update';
   static const deleteTask = '$baseUrl/task/delete';
   static const multipleRestoreTask = '$baseUrl/task/multiple-restore';
