@@ -16,6 +16,8 @@ class AppStyle {
       color: AppColor.primaryColor, fontSize: 14, fontWeight: FontWeight.w600);
   static TextStyle regular12 = const TextStyle(
       color: AppColor.black, fontSize: 12, fontWeight: FontWeight.w400);
+  static TextStyle regular14 = const TextStyle(
+      color: AppColor.black, fontSize: 14, fontWeight: FontWeight.w400);
   static TextStyle regular18 = const TextStyle(
       color: AppColor.black, fontSize: 18, fontWeight: FontWeight.w400);
   static TextStyle bold48 =

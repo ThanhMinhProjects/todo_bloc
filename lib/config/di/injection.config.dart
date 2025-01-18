@@ -44,6 +44,8 @@ import 'package:todo_bloc/features/auth/domain/usecases/set_token_usecase.dart'
     as _i1035;
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart'
     as _i841;
+import 'package:todo_bloc/features/main/presentation/bloc/main_bloc.dart'
+    as _i146;
 import 'package:todo_bloc/features/task/data/datasources/task_data_source.dart'
     as _i893;
 import 'package:todo_bloc/features/task/data/repositories/task_repository_impl.dart'
@@ -79,6 +81,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.sharedPreferences,
       preResolve: true,
     );
+    gh.factory<_i146.MainBloc>(() => _i146.MainBloc());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
     gh.factory<_i352.AppNavigator>(() => _i352.AppNavigator(

@@ -28,7 +28,7 @@ class App extends StatelessWidget {
             fontFamily: FontFamily.varelaRoundRegular,
           ),
           home: ScreenTypeHelper.getPage(
-              state.isLogin ? ScreenType.task : ScreenType.login),
+              state.isLogin ? ScreenType.main : ScreenType.login),
           builder: EasyLoading.init(),
         );
       },

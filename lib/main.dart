@@ -10,6 +10,7 @@ import 'package:todo_bloc/features/app/presentation/app.dart';
 import 'package:todo_bloc/features/app/presentation/bloc/bloc/app_bloc.dart';
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:todo_bloc/features/auth/presentation/screens/login_screen.dart';
+import 'package:todo_bloc/features/main/presentation/bloc/main_bloc.dart';
 import 'package:todo_bloc/features/task/presentation/bloc/task_bloc.dart';
 
 void main() async {
@@ -20,6 +21,9 @@ void main() async {
       BlocProvider(create: (context) => GetIt.I<AppBloc>()),
       BlocProvider(create: (context) => GetIt.I<AuthBloc>()),
       BlocProvider(create: (context) => GetIt.I<TaskBloc>()),
+      BlocProvider(
+        create: (context) => GetIt.I<MainBloc>(),
+      )
     ], child: App()),
   );
 }

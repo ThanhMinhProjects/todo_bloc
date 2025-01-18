@@ -22,7 +22,6 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     context.read<TaskBloc>().add(const InitialEvent());
@@ -41,7 +40,6 @@ class _TodoScreenState extends State<TodoScreen> {
       },
       builder: (context, state) {
         return Scaffold(
-            key: _scaffoldState,
             floatingActionButton: FloatingActionButton(
               shape: const CircleBorder(),
               backgroundColor: AppColor.primaryColor,
@@ -51,21 +49,6 @@ class _TodoScreenState extends State<TodoScreen> {
               ),
               onPressed: () =>
                   context.getNavigator.push(screenType: ScreenType.addTask),
-            ),
-            drawer: Drawer(
-                child: ListView(
-              children: [
-                IconButton(
-                    onPressed: () => context
-                        .read<AppBloc>()
-                        .add(LogoutEvent('ntminh16201@gmail.com')),
-                    icon: const Icon(Icons.logout))
-              ],
-            )),
-            appBar: AppBar(
-              leading: IconButton(
-                  onPressed: () => _scaffoldState.currentState?.openDrawer(),
-                  icon: const Icon(Icons.menu)),
             ),
             body: Column(
               children: [
