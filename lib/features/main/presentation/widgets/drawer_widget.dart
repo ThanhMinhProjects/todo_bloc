@@ -62,8 +62,8 @@ class DrawerWidget extends StatelessWidget {
                             titleText: 'Logout',
                             bodyText: 'Do you want to logout?',
                             onPressedOk: () => context
-                                .read<AppBloc>()
-                                .add(LogoutEvent('email')),
+                                .read<MainBloc>()
+                                .add(LogoutEvent('ntminnh16201@gmail.com')),
                           ));
                 },
               ),

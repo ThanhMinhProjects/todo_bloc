@@ -9,6 +9,13 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
+
+  /// Directory path: assets/icons/svg
+  $AssetsIconsSvgGen get svg => const $AssetsIconsSvgGen();
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -19,9 +26,30 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [logo];
 }
 
+class $AssetsIconsSvgGen {
+  const $AssetsIconsSvgGen();
+
+  /// File path: assets/icons/svg/task_completed.svg
+  String get taskCompleted => 'assets/icons/svg/task_completed.svg';
+
+  /// File path: assets/icons/svg/task_fail.svg
+  String get taskFail => 'assets/icons/svg/task_fail.svg';
+
+  /// File path: assets/icons/svg/task_processing.svg
+  String get taskProcessing => 'assets/icons/svg/task_processing.svg';
+
+  /// File path: assets/icons/svg/task_today.svg
+  String get taskToday => 'assets/icons/svg/task_today.svg';
+
+  /// List of all assets
+  List<String> get values =>
+      [taskCompleted, taskFail, taskProcessing, taskToday];
+}
+
 class Assets {
   Assets._();
 
+  static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 

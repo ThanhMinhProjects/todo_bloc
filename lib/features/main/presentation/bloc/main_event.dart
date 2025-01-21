@@ -9,3 +9,9 @@ class SelectScreenEvent extends MainEvent {
 
   SelectScreenEvent(this.screenType);
 }
+
+class LogoutEvent extends MainEvent {
+  final String email;
+
+  LogoutEvent(this.email);
+}

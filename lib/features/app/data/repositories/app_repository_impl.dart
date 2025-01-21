@@ -11,9 +11,4 @@ class AppRepositoriesImpl implements AppRepository {
   Future<String?> getToken() {
     return sharePref.getToken();
   }
-
-  @override
-  Future<bool> clearToken() {
-    return sharePref.clearToken();
-  }
 }

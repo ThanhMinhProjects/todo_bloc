@@ -38,6 +38,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_easyloading: ^3.0.5
   flutter_native_splash: ^2.4.4
+  flutter_svg: ^2.0.17
   get_it: ^8.0.3
   http: ^1.2.2
   injectable: ^2.5.0
@@ -67,6 +68,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/icons/svg/
     # - assets/icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -83,12 +85,13 @@ flutter:
         - asset: assets/fonts/VarelaRound-Regular.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-flutter_native_splash:
-  color: "#ffffff" # Màu nền splash (mã HEX)
-  image: assets/images/logo.png # Đường dẫn đến ảnh splash
-  android: true # Kích hoạt cho Android
-  ios: true # Kích hoạt cho iOS
-  web: false # Bỏ qua web (nếu không cần)
-  android_gravity: center # Vị trí ảnh (center, top, bottom, etc.)
-  ios_content_mode: center # Chế độ hiển thị ảnh (scaleToFill, aspectFit, etc.)
-  fullscreen: true # Tùy chọn hiển thị toàn màn hình
+
+# flutter_native_splash:
+#   color: "#ffffff" # Màu nền splash (mã HEX)
+#   image: assets/images/logo.png # Đường dẫn đến ảnh splash
+#   android: true # Kích hoạt cho Android
+#   ios: true # Kích hoạt cho iOS
+#   web: false # Bỏ qua web (nếu không cần)
+#   android_gravity: center # Vị trí ảnh (center, top, bottom, etc.)
+#   ios_content_mode: center # Chế độ hiển thị ảnh (scaleToFill, aspectFit, etc.)
+#   fullscreen: true # Tùy chọn hiển thị toàn màn hình

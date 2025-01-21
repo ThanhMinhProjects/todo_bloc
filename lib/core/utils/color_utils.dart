@@ -5,7 +5,7 @@ import 'package:todo_bloc/core/constants/app_color.dart';
 class ColorUtils {
   ColorUtils._();
   static Color getColorByStatus(String status) {
-    switch (status) {
+    switch (status.toUpperCase()) {
       case 'PROCESSING':
         return AppColor.primaryColor;
       case 'DONE':
@@ -13,7 +13,7 @@ class ColorUtils {
       case 'FAIL':
         return AppColor.red;
       default:
-        return AppColor.backgroundColor;
+        return AppColor.black;
     }
   }
 }

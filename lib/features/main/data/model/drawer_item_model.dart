@@ -12,11 +12,6 @@ class DrawerItemModel {
 
 List<DrawerItemModel> drawerItems = [
   DrawerItemModel(
-    text: 'Dashboard',
-    icon: Icons.dashboard,
-    screenType: ScreenType.dashboard,
-  ),
-  DrawerItemModel(
     text: 'Tasks',
     icon: Icons.task,
     screenType: ScreenType.task,

@@ -20,8 +20,6 @@ import 'package:todo_bloc/features/app/data/repositories/app_repository_impl.dar
     as _i208;
 import 'package:todo_bloc/features/app/domain/repositories/app_repository.dart'
     as _i108;
-import 'package:todo_bloc/features/app/domain/usecase/clear_token_usecase.dart'
-    as _i308;
 import 'package:todo_bloc/features/app/domain/usecase/get_token_usecase.dart'
     as _i884;
 import 'package:todo_bloc/features/app/presentation/bloc/bloc/app_bloc.dart'
@@ -44,6 +42,12 @@ import 'package:todo_bloc/features/auth/domain/usecases/set_token_usecase.dart'
     as _i1035;
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart'
     as _i841;
+import 'package:todo_bloc/features/main/data/repositories/main_repository_impl.dart'
+    as _i333;
+import 'package:todo_bloc/features/main/domain/repositoies/main_repository.dart'
+    as _i211;
+import 'package:todo_bloc/features/main/domain/usecases/clear_token_usecase.dart'
+    as _i915;
 import 'package:todo_bloc/features/main/presentation/bloc/main_bloc.dart'
     as _i146;
 import 'package:todo_bloc/features/task/data/datasources/task_data_source.dart'
@@ -81,28 +85,32 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.sharedPreferences,
       preResolve: true,
     );
-    gh.factory<_i146.MainBloc>(() => _i146.MainBloc());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
-    gh.factory<_i352.AppNavigator>(() => _i352.AppNavigator(
-        navigateKey: gh<_i409.GlobalKey<_i409.NavigatorState>>()));
     gh.lazySingleton<_i158.SharePrefService>(
         () => _i158.SharePrefService(gh<_i460.SharedPreferences>()));
+    gh.factory<_i352.AppNavigator>(() => _i352.AppNavigator(
+        navigateKey: gh<_i409.GlobalKey<_i409.NavigatorState>>()));
     gh.factory<_i127.ApiService>(
         () => _i127.ApiService(gh<_i158.SharePrefService>()));
     gh.factory<_i108.AppRepository>(
         () => _i208.AppRepositoriesImpl(gh<_i158.SharePrefService>()));
+    gh.factory<_i211.MainRepository>(
+        () => _i333.MainRepositoryImpl(gh<_i158.SharePrefService>()));
+    gh.factory<_i915.ClearTokenUsecase>(
+        () => _i915.ClearTokenUsecase(gh<_i211.MainRepository>()));
     gh.lazySingleton<_i94.AuthDataSource>(
         () => _i94.AuthDataSource(gh<_i127.ApiService>()));
     gh.lazySingleton<_i893.TaskDataSource>(
         () => _i893.TaskDataSource(gh<_i127.ApiService>()));
-    gh.factory<_i308.ClearTokenUsecase>(
-        () => _i308.ClearTokenUsecase(gh<_i108.AppRepository>()));
     gh.factory<_i884.GetTokenUsecase>(
         () => _i884.GetTokenUsecase(gh<_i108.AppRepository>()));
     gh.factory<_i629.AppBloc>(() => _i629.AppBloc(
           gh<_i884.GetTokenUsecase>(),
-          gh<_i308.ClearTokenUsecase>(),
+          gh<_i352.AppNavigator>(),
+        ));
+    gh.factory<_i146.MainBloc>(() => _i146.MainBloc(
+          gh<_i915.ClearTokenUsecase>(),
           gh<_i352.AppNavigator>(),
         ));
     gh.factory<_i783.TaskRepository>(

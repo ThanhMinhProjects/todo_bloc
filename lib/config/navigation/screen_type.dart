@@ -14,7 +14,6 @@ enum ScreenType {
   register,
   forgotPassword,
   main,
-  dashboard,
   task,
   projects,
   calendar,
@@ -39,8 +38,6 @@ class ScreenTypeHelper {
         return ForgotPasswordScreen();
       case ScreenType.main:
         return MainScreen();
-      case ScreenType.dashboard:
-        return const Center(child: Text('Dashboard'));
       case ScreenType.task:
         return const TodoScreen();
       case ScreenType.projects:
