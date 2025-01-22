@@ -87,10 +87,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
-    gh.lazySingleton<_i158.SharePrefService>(
-        () => _i158.SharePrefService(gh<_i460.SharedPreferences>()));
     gh.factory<_i352.AppNavigator>(() => _i352.AppNavigator(
         navigateKey: gh<_i409.GlobalKey<_i409.NavigatorState>>()));
+    gh.lazySingleton<_i158.SharePrefService>(
+        () => _i158.SharePrefService(gh<_i460.SharedPreferences>()));
     gh.factory<_i127.ApiService>(
         () => _i127.ApiService(gh<_i158.SharePrefService>()));
     gh.factory<_i108.AppRepository>(
