@@ -8,6 +8,7 @@ import 'package:todo_bloc/features/auth/data/datasources/body/send_otp_body.dart
 import 'package:todo_bloc/features/auth/domain/entities/login_entity.dart';
 import 'package:todo_bloc/features/auth/domain/entities/otp_entity.dart';
 import 'package:todo_bloc/features/auth/domain/repositories/auth_repository.dart';
+import 'package:todo_bloc/features/auth/domain/usecases/forgot_password_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/login_usecase.dart';
 import 'package:todo_bloc/features/auth/domain/usecases/send_otp_usecase.dart';
 
@@ -17,11 +18,13 @@ void main() {
   late MockAuthRepository mockAuthRepository;
   late LoginUsecase loginUsecase;
   late SendOtpUsecase sendOtpUsecase;
+  late ForgotPasswordUsecase forgotPasswordUsecase;
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();
     loginUsecase = LoginUsecase(mockAuthRepository);
     sendOtpUsecase = SendOtpUsecase(mockAuthRepository);
+    forgotPasswordUsecase = ForgotPasswordUsecase(mockAuthRepository);
   });
 
   group('LoginUsecase', () {
@@ -74,5 +77,24 @@ void main() {
       expect(result, Right(otpEntity));
       verify(mockAuthRepository.sendOtp(sendOtpBody)).called(1);
     });
+    test(
+      'return failure when send otp failed',
+      () async {
+        const email = "test123fkd";
+        final sendOtpBody = SendOtpBody(email: email);
+        final failure = ServerFailure('ServerFailure');
+        when(mockAuthRepository.sendOtp(sendOtpBody)).thenAnswer(
+          (_) async => Left(failure),
+        );
+        final result = await sendOtpUsecase(sendOtpBody);
+
+        expect(result, Left(failure));
+        verify(mockAuthRepository.sendOtp(sendOtpBody)).called(1);
+      },
+    );
   });
+
+  // group('fForgitPasswordUsecase', () {
+  //   test('', body)
+  // },);
 }
