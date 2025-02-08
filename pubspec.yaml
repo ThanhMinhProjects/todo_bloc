@@ -36,6 +36,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_dotenv: ^5.2.1
   flutter_easyloading: ^3.0.5
   flutter_native_splash: ^2.4.4
   flutter_svg: ^2.0.17
@@ -71,6 +72,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/svg/
+    - .env
     # - assets/icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -16,7 +16,7 @@ import 'package:todo_bloc/features/task/domain/entities/task_entity.dart';
 class TaskModel extends TaskEntity {
   final String? startTime;
   final String? endTime;
-  final String? createdBy;
+  final dynamic createdBy;
   final String? deletedAt;
   final int v;
 
