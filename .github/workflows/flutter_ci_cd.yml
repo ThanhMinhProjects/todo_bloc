@@ -4,15 +4,13 @@ on:
   push:
     branches:
       - main
-      # - develop
   pull_request:
     branches:
       - main
-      # - develop
 
 jobs:
-  build:
-    name: Build & Test Flutter App
+  build-android:
+    name: Build & Test Flutter App (Android)
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +20,7 @@ jobs:
       - name: 🔧 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.27.3 
+          flutter-version: 3.27.3
 
       - name: 📦 Install Dependencies
         run: flutter pub get
@@ -42,3 +40,37 @@ jobs:
           name: flutter-apk
           path: build/app/outputs/flutter-apk/app-release.apk
 
+  build-ios:
+    name: Build Flutter App (iOS)
+    runs-on: macos-latest
+    needs: build-android  # android build xong thì mới được sang ios
+
+    steps:
+      - name: 🛠️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.27.3
+
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      - name: 🍏 Setup Xcode
+        run: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+
+      - name: 📲 Install CocoaPods
+        run: |
+          cd ios
+          pod install
+          cd ..
+
+      - name: 🍏 Build iOS App
+        run: flutter build ios --no-codesign
+
+      - name: 📤 Upload iOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-ios
+          path: build/ios/iphoneos
