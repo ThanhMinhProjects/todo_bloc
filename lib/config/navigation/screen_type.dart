@@ -64,8 +64,6 @@ class ScreenTypeHelper {
         return TaskDetailScreens(id: arguments);
       case ScreenType.taskUpdate:
         return TaskUpdateScreen(task: arguments);
-      default:
-        return const Center(child: Text('Page not found'));
     }
   }
 }

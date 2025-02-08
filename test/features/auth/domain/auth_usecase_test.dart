@@ -18,13 +18,11 @@ void main() {
   late MockAuthRepository mockAuthRepository;
   late LoginUsecase loginUsecase;
   late SendOtpUsecase sendOtpUsecase;
-  late ForgotPasswordUsecase forgotPasswordUsecase;
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();
     loginUsecase = LoginUsecase(mockAuthRepository);
     sendOtpUsecase = SendOtpUsecase(mockAuthRepository);
-    forgotPasswordUsecase = ForgotPasswordUsecase(mockAuthRepository);
   });
 
   group('LoginUsecase', () {

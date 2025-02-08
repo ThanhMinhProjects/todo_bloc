@@ -22,6 +22,7 @@ class CustomCircleProgessbar extends StatelessWidget {
               value: minValue / maxValue,
               strokeWidth: 2.5,
               backgroundColor:
+                  // ignore: deprecated_member_use
                   ColorUtils.getColorByStatus(status).withOpacity(0.4),
               color: ColorUtils.getColorByStatus(status)),
           FittedBox(

@@ -32,7 +32,7 @@ class ChatBotScreen extends StatelessWidget {
               ),
             ),
           ),
-          actions: [
+          actions: const [
             // SizedBox(
             //   width: 100,
             //   child: Obx(
@@ -79,7 +79,7 @@ class ChatBotScreen extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Container(
                     padding: const EdgeInsets.all(10.0),
-                    margin: EdgeInsets.only(left: 0, right: 51),
+                    margin: const EdgeInsets.only(left: 0, right: 51),
                     decoration: BoxDecoration(
                       color: AppColor.backgroundColor,
                       borderRadius: BorderRadius.circular(12),
