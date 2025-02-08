@@ -3,6 +3,7 @@ import 'package:todo_bloc/features/auth/presentation/screens/forgot_password_scr
 import 'package:todo_bloc/features/auth/presentation/screens/login_screen.dart';
 import 'package:todo_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:todo_bloc/features/auth/presentation/screens/register_screen.dart';
+import 'package:todo_bloc/features/chat_bot/presentation/screens/chat_bot_screen.dart';
 import 'package:todo_bloc/features/main/presentation/screen/main_screen.dart';
 import 'package:todo_bloc/features/task/presentation/screens/create_task_screen.dart';
 import 'package:todo_bloc/features/task/presentation/screens/task_detail_screen.dart';
@@ -15,6 +16,7 @@ enum ScreenType {
   forgotPassword,
   main,
   task,
+  chatBot,
   projects,
   calendar,
   team,
@@ -40,6 +42,8 @@ class ScreenTypeHelper {
         return MainScreen();
       case ScreenType.task:
         return const TodoScreen();
+      case ScreenType.chatBot:
+        return ChatBotScreen();
       case ScreenType.projects:
         return const Center(child: Text('Projects'));
       case ScreenType.calendar:

@@ -13,7 +13,7 @@ class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
 
   final String avtUrl =
-      'https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/465814452_1932369123841356_7386124771125468932_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHuG7m5rZwFAuyO-hkITG4GR9OOv80MuwBH046_zQy7AIp63z_O8yDZSVXh7yqTNnoYn-epggvCCXdHbpVFYwql&_nc_ohc=SdyliMwhNiAQ7kNvgH4rAyY&_nc_oc=AdhRXFsgx7-d16wtt7QeBQTItCizZbxdgxqrujpiUgi2K9SP9huiXvmbhuOWJTzUeBU&_nc_zt=23&_nc_ht=scontent.fdad1-4.fna&_nc_gid=AyksTbN975tvVzBD3LYe99K&oh=00_AYC1HmmO8dOE9H_jcffDy5zWWQPkKKEq6kgPKp7aReJBTg&oe=6790F521';
+      'https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/465814452_1932369123841356_7386124771125468932_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHuG7m5rZwFAuyO-hkITG4GR9OOv80MuwBH046_zQy7AIp63z_O8yDZSVXh7yqTNnoYn-epggvCCXdHbpVFYwql&_nc_ohc=dfU7oEb_DT8Q7kNvgE-m0fn&_nc_oc=AdioT1vZAQHI5euZF8N1kEuIlzqc8d6yL7kRBguo7dfE-yAcuZytJaahLRlf6HJLtjI&_nc_zt=23&_nc_ht=scontent.fdad1-4.fna&_nc_gid=Aps76oqNUg_DlxpQ2m7kWoM&oh=00_AYBNkD2U8h_z-6vgi2w7aTTvvs5VKOmy3X8dg6l4FGWuaA&oe=67ACA4A1';
   @override
   Widget build(BuildContext context) {
     return Drawer(

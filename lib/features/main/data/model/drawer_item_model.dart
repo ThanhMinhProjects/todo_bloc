@@ -17,6 +17,11 @@ List<DrawerItemModel> drawerItems = [
     screenType: ScreenType.task,
   ),
   DrawerItemModel(
+    text: 'Chat Bot',
+    icon: Icons.chat,
+    screenType: ScreenType.chatBot,
+  ),
+  DrawerItemModel(
     text: 'Projects',
     icon: Icons.folder,
     screenType: ScreenType.projects,

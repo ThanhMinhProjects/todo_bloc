@@ -19,11 +19,15 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Google_Gemini_logo.png
+  AssetGenImage get googleGeminiLogo =>
+      const AssetGenImage('assets/images/Google_Gemini_logo.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [logo];
+  List<AssetGenImage> get values => [googleGeminiLogo, logo];
 }
 
 class $AssetsIconsSvgGen {
